@@ -54,6 +54,9 @@ export async function POST(req: Request) {
     .limit(10);
 
   const ordered = (history ?? []).reverse();
+  // Anthropic requires the first message to be a user turn. Trim any
+  // assistant messages from the front of the window.
+  while (ordered.length && ordered[0].role !== 'user') ordered.shift();
 
   let stream;
   try {

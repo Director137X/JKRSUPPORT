@@ -9,39 +9,25 @@ export async function POST(req: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
-  const { admin_id } = (await req.json().catch(() => ({}))) as { admin_id?: string };
-  if (!admin_id) return NextResponse.json({ error: 'missing admin_id' }, { status: 400 });
+  const body = (await req.json().catch(() => ({}))) as { other_id?: string; admin_id?: string };
+  const other = body.other_id ?? body.admin_id;
+  if (!other) return NextResponse.json({ error: 'missing other_id' }, { status: 400 });
+  if (other === user.id) return NextResponse.json({ error: 'cannot DM yourself' }, { status: 400 });
 
-  const { data: target } = await supabase
-    .from('profiles')
-    .select('id,role')
-    .eq('id', admin_id)
-    .maybeSingle() as any;
-  if (!target || !['admin', 'superadmin'].includes(target.role)) {
-    return NextResponse.json({ error: 'target is not an admin' }, { status: 400 });
-  }
-
-  const { data: me } = await supabase
-    .from('profiles')
-    .select('id,role')
-    .eq('id', user.id)
-    .maybeSingle() as any;
-
-  // Decide who is rep / admin in the pair.
-  const repId = me?.role === 'admin' || me?.role === 'superadmin' ? admin_id : user.id;
-  const adminId = repId === user.id ? admin_id : user.id;
-
+  // dm_threads keeps two columns (rep_id / admin_id) for compatibility — we
+  // canonicalize the pair so a thread between A,B never duplicates as B,A.
+  const [a, b] = [user.id, other].sort();
   const { data: existing } = await supabase
     .from('dm_threads')
     .select('id')
-    .eq('rep_id', repId)
-    .eq('admin_id', adminId)
+    .eq('rep_id', a)
+    .eq('admin_id', b)
     .maybeSingle() as any;
   if (existing?.id) return NextResponse.json({ ok: true, id: existing.id });
 
   const { data: created, error } = await supabase
     .from('dm_threads')
-    .insert({ rep_id: repId, admin_id: adminId })
+    .insert({ rep_id: a, admin_id: b })
     .select('id')
     .single() as any;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

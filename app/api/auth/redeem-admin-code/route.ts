@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createServerClient, createServiceRoleClient } from '@/lib/supabase/server';
+import { isPreApprovedAdmin } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -9,12 +10,22 @@ export async function POST(req: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
+  const admin = createServiceRoleClient();
+
+  // Pre-approved emails bypass the code entirely.
+  if (isPreApprovedAdmin(user.email)) {
+    const { error: upErr } = await admin
+      .from('profiles')
+      .update({ role: 'admin', position: 'admin' })
+      .eq('id', user.id);
+    if (upErr) return NextResponse.json({ error: upErr.message }, { status: 500 });
+    return NextResponse.json({ ok: true, role: 'admin', via: 'pre_approved' });
+  }
+
   const { code } = (await req.json().catch(() => ({}))) as { code?: string };
   if (!code || code.length < 4) {
     return NextResponse.json({ error: 'invalid code' }, { status: 400 });
   }
-
-  const admin = createServiceRoleClient();
 
   const { data: row, error } = await admin
     .from('admin_invite_codes')

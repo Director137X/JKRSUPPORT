@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut, UsersRound, type LucideIcon } from 'lucide-react';
 import { SpartanHelmet } from './spartan-helmet';
 import { EyeIcon } from './eye-icon';
-import { MasonicEye } from './masonic-eye';
+import { OversightTrigger } from './oversight-trigger';
 import type { Profile } from '@/types/database';
 import { isSuperadminEmail } from '@/lib/auth';
 
@@ -21,7 +21,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: '/support-circle', label: 'SUPPORT CIRCLE', icon: Users, eyebrow: true },
-  { href: '/members',        label: 'MEMBERS',        icon: UsersRound, eyebrow: true, adminOnly: true },
+  { href: '/members',        label: 'MEMBERS',        icon: UsersRound, eyebrow: true },
   { href: '/admin',          label: 'ADMIN',          icon: ShieldCheck, eyebrow: true, adminOnly: true },
   { href: '/training',       label: 'TRAINING',       icon: BookOpen, eyebrow: true },
   { href: '/coach',          label: 'SPARTAN AI',     icon: Shield, eyebrow: true },
@@ -68,45 +68,10 @@ export function Sidebar({ profile }: Props) {
         })}
       </nav>
 
-      {/* Super-admin OVERSIGHT gold tab — sits directly above the user info */}
-      {isSuper && (
-        <Link
-          href="/oversight"
-          className="oversight-tab"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            margin: '0 12px 10px',
-            padding: '10px 14px',
-            borderRadius: '0',
-            border: '1px solid #C9A961',
-            background:
-              pathname?.startsWith('/oversight')
-                ? 'linear-gradient(180deg, #C9A961 0%, #A88742 100%)'
-                : 'linear-gradient(180deg, rgba(201,169,97,0.12) 0%, rgba(201,169,97,0.04) 100%)',
-            color: pathname?.startsWith('/oversight') ? '#000' : '#F5C84B',
-            fontFamily: 'var(--font-barlow), sans-serif',
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.24em',
-            textTransform: 'uppercase',
-            transition: 'background 200ms ease, color 200ms ease',
-          }}
-        >
-          <MasonicEye size={18} className="shrink-0" />
-          <span style={{ flex: 1 }}>Oversight</span>
-          <span
-            style={{
-              fontSize: '8px',
-              letterSpacing: '0.2em',
-              opacity: 0.7,
-            }}
-          >
-            S-A
-          </span>
-        </Link>
-      )}
+      {/* Hidden — superadmin navigates to /oversight via direct URL only.
+          A subtle key-combo trigger lives in OversightTrigger so the panel
+          surfaces without ever advertising the role in the UI. */}
+      {isSuper && <OversightTrigger />}
 
       <div className="p-4 border-t border-line bg-surface-2/40">
         <div className="flex items-center gap-3 mb-3">
@@ -116,9 +81,16 @@ export function Sidebar({ profile }: Props) {
           <div className="flex-1 overflow-hidden">
             <p className="text-sm text-white font-medium truncate flex items-center gap-1.5">
               {profile.is_anonymous ? 'Anonymous Rep' : profile.name || profile.email}
-              {isAdmin && <EyeIcon size={14} className="text-gold shrink-0" />}
             </p>
-            <p className="text-xs text-zinc-500 truncate capitalize">{profile.role}</p>
+            <p className="text-xs text-zinc-500 truncate capitalize">
+              {/* Visible label hides any privileged role.
+                  - 'user' → show position (closer/setter) or 'Member'
+                  - 'admin' → show 'Admin'
+                  - 'superadmin' → still appear as 'Member' externally */}
+              {profile.role === 'admin'
+                ? 'Admin'
+                : profile.position ?? 'Member'}
+            </p>
           </div>
         </div>
         <form action="/auth/signout" method="post">

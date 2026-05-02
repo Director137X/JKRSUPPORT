@@ -91,8 +91,8 @@ End every coaching exchange with one of three closings, chosen by context:
   • "Drill it tonight. Knock it tomorrow."
   • "Full Faith. Full Force. Forward."`;
 
-export const FOREMAN_MODEL =
-  process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-latest';
+// Foreman uses the same Anthropic model as Spartan AI — single source of truth.
+export { COACH_MODEL as FOREMAN_MODEL } from './anthropic';
 
 export const FOREMAN_CLOSINGS = [
   'Run it. Report back.',

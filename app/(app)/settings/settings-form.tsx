@@ -10,6 +10,9 @@ export function SettingsForm({ profile }: { profile: Profile }) {
   const supabase = createClient();
   const [name, setName] = useState(profile.name ?? '');
   const [isAnonymous, setIsAnonymous] = useState(profile.is_anonymous);
+  const [position, setPosition] = useState<'closer' | 'setter' | 'admin' | 'superadmin'>(
+    (profile.position as any) ?? 'closer',
+  );
   const [savingProfile, setSavingProfile] = useState(false);
   const [profileMsg, setProfileMsg] = useState<string | null>(null);
 
@@ -24,9 +27,17 @@ export function SettingsForm({ profile }: { profile: Profile }) {
     e.preventDefault();
     setSavingProfile(true);
     setProfileMsg(null);
+    // Non-admins can only switch between closer and setter; admin/superadmin
+    // positions are role-locked and only admins can promote others.
+    const safePos =
+      profile.role === 'admin' || profile.role === 'superadmin'
+        ? position
+        : position === 'admin' || position === 'superadmin'
+        ? (profile.position ?? 'closer')
+        : position;
     const { error } = await supabase
       .from('profiles')
-      .update({ name, is_anonymous: isAnonymous })
+      .update({ name, is_anonymous: isAnonymous, position: safePos })
       .eq('id', profile.id);
     setSavingProfile(false);
     setProfileMsg(error ? error.message : 'Saved.');
@@ -81,6 +92,32 @@ export function SettingsForm({ profile }: { profile: Profile }) {
               onChange={(e) => setName(e.target.value)}
               className="w-full bg-black border border-line rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold"
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Position</label>
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
+              {(['closer', 'setter'] as const).map((p) => {
+                const active = position === p;
+                return (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setPosition(p)}
+                    className={`py-3 px-4 rounded-lg border text-sm font-semibold uppercase tracking-wider transition-colors ${
+                      active
+                        ? 'bg-gold/10 border-gold text-gold'
+                        : 'bg-black border-line text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-[11px] text-zinc-500 mt-2">
+              Switch between closer and setter. Admin status is granted by leadership only.
+            </p>
           </div>
           <label className="flex items-center gap-3 text-sm text-zinc-300 cursor-pointer">
             <input

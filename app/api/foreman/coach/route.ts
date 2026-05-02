@@ -68,6 +68,9 @@ export async function POST(req: Request) {
     .order('created_at', { ascending: false })
     .limit(12);
   const ordered = (history ?? []).reverse() as { role: 'user' | 'assistant'; content: string }[];
+  // Anthropic requires the first message to be a user turn. Trim any
+  // assistant messages from the front of the window.
+  while (ordered.length && ordered[0].role !== 'user') ordered.shift();
 
   const kpiBlock = (kpiRows ?? []).length
     ? buildKpiBlock(kpiRows as any[])
@@ -91,8 +94,11 @@ ${kpiBlock}`;
     stream = await anthropic.messages.stream({
       model: FOREMAN_MODEL,
       max_tokens: 1500,
+      // Single cache breakpoint at end of corpus — its prefix (identity +
+      // corpus, ~24K tokens) clears Haiku's 2048-token minimum. Caching the
+      // identity block alone would error because it's only ~1.7K tokens.
       system: [
-        { type: 'text', text: FOREMAN_IDENTITY, cache_control: { type: 'ephemeral' } },
+        { type: 'text', text: FOREMAN_IDENTITY },
         { type: 'text', text: corpusBlock, cache_control: { type: 'ephemeral' } },
         { type: 'text', text: operatorContext },
       ],

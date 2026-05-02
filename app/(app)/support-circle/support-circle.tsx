@@ -33,7 +33,7 @@ export function SupportCircle({ profile }: { profile: Profile }) {
         <div className="circle-header-left">
           <div className="circle-eyebrow">JK&amp;R</div>
           <h1 className="circle-title">Support Circle</h1>
-          <p className="circle-sub">Group chat for the field. Speak as yourself, or speak anonymously.</p>
+          <p className="circle-sub">Group chat for the field. Here to support each other.</p>
         </div>
 
         <div className="circle-header-right">

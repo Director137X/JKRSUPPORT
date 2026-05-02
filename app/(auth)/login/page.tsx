@@ -13,6 +13,7 @@ import {
   reachedStage,
   usePortalEntrance,
 } from '@/components/portal/usePortalEntrance';
+import { isPreApprovedAdmin } from '@/lib/auth';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 type Mode = 'signin' | 'signup';
@@ -62,7 +63,8 @@ function LoginInner() {
       return;
     }
 
-    if (position === 'admin' && adminCode.trim().length < 4) {
+    const skipCode = position === 'admin' && isPreApprovedAdmin(email);
+    if (position === 'admin' && !skipCode && adminCode.trim().length < 4) {
       setLoading(false);
       setError('Admin invite code is required.');
       return;
@@ -97,7 +99,7 @@ function LoginInner() {
       const res = await fetch('/api/auth/redeem-admin-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: adminCode.trim() }),
+        body: JSON.stringify({ code: skipCode ? '' : adminCode.trim() }),
       });
       setLoading(false);
       if (!res.ok) {
@@ -203,7 +205,7 @@ function LoginInner() {
             </FieldFade>
           )}
 
-          {mode === 'signup' && position === 'admin' && (
+          {mode === 'signup' && position === 'admin' && !isPreApprovedAdmin(email) && (
             <FieldFade stage={stage} index={4}>
               <PortalField
                 label="ADMIN INVITE CODE"
