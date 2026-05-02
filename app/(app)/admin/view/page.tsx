@@ -106,7 +106,7 @@ export default async function AdminViewPage() {
                 {(users ?? []).map((u: any) => (
                   <tr key={u.id} className="border-t border-line hover:bg-surface-2/50">
                     <td className="px-4 py-3 text-white">
-                      {u.is_anonymous && !isSuper ? 'Anonymous Rep' : (u.name ?? '—')}
+                      {u.name ?? '—'}
                     </td>
                     <td className="px-4 py-3 text-zinc-400">{isSuper ? u.email : '—'}</td>
                     <td className="px-4 py-3 text-gold capitalize">

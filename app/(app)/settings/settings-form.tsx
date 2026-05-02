@@ -9,10 +9,6 @@ export function SettingsForm({ profile }: { profile: Profile }) {
   const router = useRouter();
   const supabase = createClient();
   const [name, setName] = useState(profile.name ?? '');
-  const [isAnonymous, setIsAnonymous] = useState(profile.is_anonymous);
-  const [position, setPosition] = useState<'closer' | 'setter' | 'admin' | 'superadmin'>(
-    (profile.position as any) ?? 'closer',
-  );
   const [savingProfile, setSavingProfile] = useState(false);
   const [profileMsg, setProfileMsg] = useState<string | null>(null);
 
@@ -27,17 +23,9 @@ export function SettingsForm({ profile }: { profile: Profile }) {
     e.preventDefault();
     setSavingProfile(true);
     setProfileMsg(null);
-    // Non-admins can only switch between closer and setter; admin/superadmin
-    // positions are role-locked and only admins can promote others.
-    const safePos =
-      profile.role === 'admin' || profile.role === 'superadmin'
-        ? position
-        : position === 'admin' || position === 'superadmin'
-        ? (profile.position ?? 'closer')
-        : position;
     const { error } = await supabase
       .from('profiles')
-      .update({ name, is_anonymous: isAnonymous, position: safePos })
+      .update({ name })
       .eq('id', profile.id);
     setSavingProfile(false);
     setProfileMsg(error ? error.message : 'Saved.');
@@ -78,6 +66,12 @@ export function SettingsForm({ profile }: { profile: Profile }) {
   };
 
   const isAdmin = profile.role === 'admin' || profile.role === 'superadmin';
+  const positionLabel =
+    profile.role === 'admin' || profile.role === 'superadmin'
+      ? 'Admin'
+      : profile.position
+      ? profile.position.charAt(0).toUpperCase() + profile.position.slice(1)
+      : 'Member';
 
   return (
     <div className="space-y-8">
@@ -96,38 +90,15 @@ export function SettingsForm({ profile }: { profile: Profile }) {
 
           <div>
             <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Position</label>
-            <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
-              {(['closer', 'setter'] as const).map((p) => {
-                const active = position === p;
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setPosition(p)}
-                    className={`py-3 px-4 rounded-lg border text-sm font-semibold uppercase tracking-wider transition-colors ${
-                      active
-                        ? 'bg-gold/10 border-gold text-gold'
-                        : 'bg-black border-line text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    {p}
-                  </button>
-                );
-              })}
+            <div className="bg-black border border-line rounded-lg px-4 py-3 text-zinc-300 flex items-center justify-between">
+              <span>{positionLabel}</span>
+              <span className="text-[10px] tracking-widest uppercase text-zinc-500">Locked at signup</span>
             </div>
             <p className="text-[11px] text-zinc-500 mt-2">
-              Switch between closer and setter. Admin status is granted by leadership only.
+              Anonymity is a per-message choice in Support Circle, not a permanent setting.
             </p>
           </div>
-          <label className="flex items-center gap-3 text-sm text-zinc-300 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={isAnonymous}
-              onChange={(e) => setIsAnonymous(e.target.checked)}
-              className="accent-gold w-4 h-4"
-            />
-            Show me as &quot;Anonymous Rep&quot; to admins
-          </label>
+
           <div className="flex items-center gap-3">
             <button
               type="submit"
@@ -145,7 +116,7 @@ export function SettingsForm({ profile }: { profile: Profile }) {
         <section className="bg-surface border border-line rounded-xl p-6">
           <h2 className="font-display text-sm tracking-widest uppercase text-gold mb-4">Admin Access</h2>
           <p className="text-sm text-zinc-400 mb-4">
-            Request admin access from HQ. They&apos;ll email you the invite key — paste it below to be promoted.
+            Request admin access from leadership. They&apos;ll send you the invite key — paste it below to be promoted.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <button
@@ -186,7 +157,7 @@ export function SettingsForm({ profile }: { profile: Profile }) {
         <section className="bg-surface border border-line rounded-xl p-6">
           <h2 className="font-display text-sm tracking-widest uppercase text-gold mb-4">Admin Status</h2>
           <p className="text-sm text-zinc-300">
-            You are currently <span className="text-gold font-semibold capitalize">{profile.role}</span>.
+            You currently have admin access.
           </p>
         </section>
       )}

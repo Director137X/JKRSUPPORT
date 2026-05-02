@@ -33,8 +33,16 @@ export function AppShell({ profile, unreadDms, children }: Props) {
 
   return (
     <div className="flex h-[100dvh] bg-black text-zinc-300 overflow-hidden">
-      {/* Mobile top bar — only visible on small screens */}
-      <header className="md:hidden fixed top-0 inset-x-0 z-30 h-14 bg-panel border-b border-line flex items-center px-3 gap-3">
+      {/* Mobile top bar — only visible on small screens.
+          paddingTop respects the iOS safe area so the helmet/menu icons
+          don't slide under the notch in standalone PWA mode. */}
+      <header
+        className="md:hidden fixed top-0 inset-x-0 z-30 bg-panel border-b border-line flex items-center px-3 gap-3"
+        style={{
+          height: 'calc(56px + env(safe-area-inset-top, 0px))',
+          paddingTop: 'env(safe-area-inset-top, 0px)',
+        }}
+      >
         <button
           type="button"
           aria-label="Open menu"
@@ -102,7 +110,9 @@ export function AppShell({ profile, unreadDms, children }: Props) {
         </div>
       </aside>
 
-      <main className="flex-1 overflow-hidden pt-14 md:pt-0">{children}</main>
+      <main className="flex-1 overflow-hidden pt-[calc(56px+env(safe-area-inset-top,0px))] md:pt-0">
+        {children}
+      </main>
     </div>
   );
 }

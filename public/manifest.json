@@ -1,0 +1,19 @@
+{
+  "name": "JK&R Support Portal",
+  "short_name": "JK&R",
+  "description": "JK&R Construction — Sales support, training, and team chat.",
+  "start_url": "/coach",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

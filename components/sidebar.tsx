@@ -136,7 +136,7 @@ export function Sidebar({ profile, unreadDms = 0 }: Props) {
           </div>
           <div className="flex-1 overflow-hidden">
             <p className="text-sm text-white font-medium truncate flex items-center gap-1.5">
-              {profile.is_anonymous ? 'Anonymous Rep' : profile.name || profile.email}
+              {profile.name || profile.email}
             </p>
             <p className="text-xs text-zinc-500 truncate capitalize">
               {/* Visible label collapses to 2 tiers — Admin or Member.

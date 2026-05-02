@@ -78,7 +78,7 @@ export async function POST(req: Request) {
 
   const operatorContext = profile
     ? `OPERATOR PROFILE
-  Name: ${profile.is_anonymous ? 'Anonymous Operator' : profile.name ?? 'Unknown'}
+  Name: ${profile.name ?? 'Unknown'}
   Role: ${profile.role ?? 'user'} (${profile.position ?? 'unspecified'})
 
 ${kpiBlock}`

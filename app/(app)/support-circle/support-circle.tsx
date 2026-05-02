@@ -19,8 +19,9 @@ type Tab = 'circle' | 'dms';
 export function SupportCircle({ profile }: { profile: Profile }) {
   const [tab, setTab] = useState<Tab>('circle');
   const isAdmin = profile.role === 'admin' || profile.role === 'superadmin';
-  // Admins / Director cannot post anonymously — only closers/setters can.
-  const [anonymous, setAnonymous] = useState<boolean>(!isAdmin && profile.is_anonymous);
+  // Anonymity is a per-post choice — never persisted to profile. Defaults
+  // to OFF every time the page loads. Admins can never toggle it on.
+  const [anonymous, setAnonymous] = useState<boolean>(false);
 
   return (
     <div className="circle-root">
