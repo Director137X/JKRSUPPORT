@@ -110,6 +110,11 @@ const MEMBERS_CSS = `
   font-family: 'Barlow', sans-serif; font-size: 14px;
 }
 .members-wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+@media (max-width: 720px) {
+  .members-wrap { padding: 22px 16px 80px; }
+  .members-title { font-size: 24px; }
+  .group-grid { grid-template-columns: 1fr !important; }
+}
 .members-header { border-bottom: 1px solid #21262d; padding-bottom: 22px; margin-bottom: 24px; }
 .members-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; color: #c9a227; text-transform: uppercase; margin-bottom: 6px; }
 .members-title { font-family: 'Oswald', sans-serif; font-size: 30px; font-weight: 600; }

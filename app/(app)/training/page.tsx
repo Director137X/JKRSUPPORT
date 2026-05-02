@@ -60,6 +60,11 @@ const TRAINING_CSS = `
   margin: 0 auto;
   padding: 48px 40px 96px;
 }
+@media (max-width: 720px) {
+  .training-wrap { padding: 24px 16px 80px; }
+  .training-title { font-size: 24px !important; }
+  .training-grid { grid-template-columns: 1fr !important; }
+}
 .training-header {
   border-bottom: 1px solid #21262d;
   padding-bottom: 24px;

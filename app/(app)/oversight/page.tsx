@@ -188,6 +188,14 @@ const OVERSIGHT_CSS = `
 
 .tele-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
 @media (max-width: 1100px) { .tele-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .tele-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px) {
+  .oversight-root { padding: 22px 16px 80px !important; }
+  .oversight-title { font-size: 24px !important; }
+  .ct-row { grid-template-columns: 1fr 1fr !important; gap: 4px 8px; padding: 10px !important; }
+  .ct-row.ct-head { display: none !important; }
+  .ct-row > span { font-size: 11px; }
+}
 .tele { border: 1px solid #1A1A1A; background: #050505; padding: 14px 16px; }
 .tele-num { font-family: 'Oswald', sans-serif; font-size: 28px; color: #F5F5F5; line-height: 1; }
 .tele-lbl { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 2px; color: #8A8A8A; text-transform: uppercase; margin-top: 6px; }

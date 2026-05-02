@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { Sidebar } from '@/components/sidebar';
+import { AppShell } from '@/components/app-shell';
 import { createServerClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
@@ -22,9 +22,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     .is('read_at', null);
 
   return (
-    <div className="flex h-screen bg-black text-zinc-300">
-      <Sidebar profile={profile} unreadDms={unreadDms ?? 0} />
-      <main className="flex-1 overflow-hidden">{children}</main>
-    </div>
+    <AppShell profile={profile} unreadDms={unreadDms ?? 0}>
+      {children}
+    </AppShell>
   );
 }

@@ -229,6 +229,10 @@ const DM_CSS = `
   border: 1px solid #21262d; background: #161b22; min-height: 0;
   position: relative;
 }
+@media (max-width: 720px) {
+  .dm-pane { grid-template-columns: 1fr; gap: 0; }
+  .dm-list { border-right: 0; border-bottom: 1px solid #21262d; max-height: 200px; }
+}
 .dm-list { border-right: 1px solid #21262d; overflow-y: auto; padding: 8px 0; }
 .dm-list-head {
   font-family: 'Barlow Condensed', sans-serif;

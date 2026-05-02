@@ -95,15 +95,15 @@ export function CoachChat({ initialConversationId, initialMessages }: Props) {
 
   return (
     <div className="h-full flex flex-col bg-black">
-      <div className="px-8 py-5 border-b border-line bg-panel flex items-center gap-3">
-        <Bot className="text-gold" size={22} />
-        <div>
+      <div className="px-4 sm:px-8 py-4 sm:py-5 border-b border-line bg-panel flex items-center gap-3">
+        <Bot className="text-gold shrink-0" size={22} />
+        <div className="min-w-0">
           <h2 className="font-display tracking-wide text-white">Spartan AI Support</h2>
-          <p className="text-xs text-zinc-500">Trained on JK&R&apos;s 8 modules. Ask for word tracks, frameworks, or live field support.</p>
+          <p className="text-xs text-zinc-500 truncate">Trained on JK&R&apos;s 8 modules. Ask for word tracks, frameworks, or live field support.</p>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-8 py-6 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6 scrollbar-thin">
         <div className="max-w-3xl mx-auto space-y-6">
           {messages.length === 0 && (
             <div className="text-center text-zinc-500 mt-20">
@@ -137,7 +137,7 @@ export function CoachChat({ initialConversationId, initialMessages }: Props) {
         </div>
       </div>
 
-      <div className="px-8 py-5 border-t border-line bg-panel">
+      <div className="px-4 sm:px-8 py-4 sm:py-5 border-t border-line bg-panel">
         <form onSubmit={send} className="max-w-3xl mx-auto flex gap-3">
           <input
             value={input}

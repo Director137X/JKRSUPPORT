@@ -279,6 +279,13 @@ const CIRCLE_CSS = `
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
+}
+@media (max-width: 720px) {
+  .circle-header { padding: 20px 16px 14px; }
+  .circle-title { font-size: 22px !important; }
+  .circle-tabs { padding: 0 16px !important; }
+  .circle-main { padding: 0 16px 16px !important; }
 }
 .circle-eyebrow {
   font-family: 'Barlow Condensed', sans-serif;
