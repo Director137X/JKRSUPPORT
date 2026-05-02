@@ -112,13 +112,13 @@ export function Sidebar({ profile }: Props) {
               {profile.is_anonymous ? 'Anonymous Rep' : profile.name || profile.email}
             </p>
             <p className="text-xs text-zinc-500 truncate capitalize">
-              {/* Visible label hides any privileged role.
-                  - 'user' → show position (closer/setter) or 'Member'
-                  - 'admin' → show 'Admin'
-                  - 'superadmin' → still appear as 'Member' externally */}
-              {profile.role === 'admin'
+              {/* Visible label collapses to 2 tiers — Admin or Member.
+                  The word "superadmin" never appears anywhere on screen. */}
+              {profile.role === 'admin' || profile.role === 'superadmin'
                 ? 'Admin'
-                : profile.position ?? 'Member'}
+                : profile.position === 'closer' || profile.position === 'setter'
+                ? profile.position
+                : 'Member'}
             </p>
           </div>
         </div>

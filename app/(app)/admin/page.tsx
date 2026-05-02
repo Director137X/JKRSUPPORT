@@ -31,7 +31,7 @@ export default async function AdminPage() {
             Admin Dashboard <EyeIcon size={20} className="text-gold" />
           </h1>
           <p className="text-sm text-zinc-500 mt-1">
-            {isSuper ? 'Superadmin view — full identities visible.' : 'Admin view — anonymous reps masked.'}
+            {isSuper ? 'Full identities visible.' : 'Anonymous reps masked.'}
           </p>
         </header>
 
