@@ -1,11 +1,25 @@
 import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { COACH_MODEL } from '@/lib/anthropic';
+import { createServerClient } from '@/lib/supabase/server';
+import { isSuperadminEmail } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
+  const supabase = await createServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  const { data: me } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle() as any;
+  if (me?.role !== 'superadmin' && !isSuperadminEmail(user.email)) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+  }
+
   const key = process.env.ANTHROPIC_API_KEY ?? '';
   const model = COACH_MODEL;
   const sdkVersion = (Anthropic as any).VERSION ?? 'unknown';

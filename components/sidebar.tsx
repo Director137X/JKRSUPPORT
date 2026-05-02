@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut, type LucideIcon } from 'lucide-react';
+import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut, UsersRound, type LucideIcon } from 'lucide-react';
 import { SpartanHelmet } from './spartan-helmet';
 import { EyeIcon } from './eye-icon';
 import { MasonicEye } from './masonic-eye';
@@ -21,6 +21,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: '/support-circle', label: 'SUPPORT CIRCLE', icon: Users, eyebrow: true },
+  { href: '/members',        label: 'MEMBERS',        icon: UsersRound, eyebrow: true, adminOnly: true },
   { href: '/admin',          label: 'ADMIN',          icon: ShieldCheck, eyebrow: true, adminOnly: true },
   { href: '/training',       label: 'TRAINING',       icon: BookOpen, eyebrow: true },
   { href: '/coach',          label: 'SPARTAN AI',     icon: Shield, eyebrow: true },

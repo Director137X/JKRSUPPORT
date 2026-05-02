@@ -27,12 +27,6 @@ export default async function TrainingPage() {
           </header>
 
           <section className="training-grid">
-            <a href="/training/kpi" className="training-card kpi-card">
-              <div className="card-eyebrow">LIVE TRACKER</div>
-              <div className="card-title">My KPIs</div>
-              <p className="card-desc">Log today's TOD, DMC, ODM, UBC, SFC, SIGNED, SOLD. The Foreman uses this to diagnose slumps.</p>
-              <span className="card-link">Open tracker →</span>
-            </a>
             {MODULE_FILES.map((m) => (
               <a key={m.id} href={`/training/${m.file}`} className="training-card">
                 <div className="card-eyebrow">PDF {String(m.n).padStart(2, '0')}</div>

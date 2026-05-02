@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Send, Lock, EyeOff, Eye, Users, ShieldCheck } from 'lucide-react';
+import { Send, Lock, EyeOff, Eye, Users, ShieldCheck, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import type { CircleFeedRow } from '@/types/database';
 import { DMPane } from './dm-pane';
@@ -160,7 +160,28 @@ function CirclePane({ anonymous, profile }: { anonymous: boolean; profile: Profi
         {messages.length === 0 && (
           <SystemLine text="The Circle is quiet. Be the first to speak." />
         )}
-        {messages.map((m) => <CircleRow key={m.id} m={m} meId={profile.id} />)}
+        {messages.map((m) => (
+          <CircleRow
+            key={m.id}
+            m={m}
+            meId={profile.id}
+            canDelete={profile.role === 'admin' || profile.role === 'superadmin'}
+            onDelete={async (id) => {
+              if (!confirm('Delete this message?')) return;
+              const res = await fetch('/api/circle/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id }),
+              });
+              if (res.ok) {
+                setMessages((prev) => prev.filter((x) => x.id !== id));
+              } else {
+                const { error } = await res.json().catch(() => ({ error: 'Delete failed' }));
+                setErr(error || 'Delete failed');
+              }
+            }}
+          />
+        ))}
         <div ref={tailRef} />
       </div>
 
@@ -196,16 +217,33 @@ function CirclePane({ anonymous, profile }: { anonymous: boolean; profile: Profi
   );
 }
 
-function CircleRow({ m, meId }: { m: CircleFeedRow; meId: string }) {
+function CircleRow({
+  m,
+  canDelete,
+  onDelete,
+}: {
+  m: CircleFeedRow;
+  meId: string;
+  canDelete: boolean;
+  onDelete: (id: string) => void;
+}) {
   const isAdminPost = m.author_role === 'admin' || m.author_role === 'superadmin';
-  // The view masks identity for non-superadmins; if author_email is present it's me OR I'm a superadmin.
-  const isMine = !!m.author_email && m.author_email.toLowerCase().length > 0 && m.author_name === m.display_name && false;
   return (
-    <div className={`row ${isMine ? 'mine' : ''}`}>
+    <div className="row">
       <div className="row-head">
         <span className="row-name">{m.display_name}</span>
         {isAdminPost && <span className="row-badge">ADMIN</span>}
         <span className="row-time">{new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        {canDelete && (
+          <button
+            type="button"
+            className="row-del"
+            aria-label="Delete message"
+            onClick={() => onDelete(m.id)}
+          >
+            <Trash2 size={12} />
+          </button>
+        )}
       </div>
       <div className="row-body">{m.body}</div>
     </div>
@@ -320,6 +358,12 @@ const CIRCLE_CSS = `
   letter-spacing: 2px;
 }
 .row-time { color: #484f58; margin-left: auto; font-weight: 500; letter-spacing: 1px; }
+.row-del {
+  background: transparent; border: 0; color: #484f58; cursor: pointer; padding: 0 4px;
+  display: inline-flex; align-items: center;
+  transition: color 150ms ease;
+}
+.row-del:hover { color: #b84a3f; }
 .row-body { font-size: 14px; color: #e6edf3; line-height: 1.65; white-space: pre-wrap; }
 
 .circle-composer { border: 1px solid #21262d; background: #161b22; padding: 12px 16px; }
