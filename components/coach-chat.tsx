@@ -98,8 +98,8 @@ export function CoachChat({ initialConversationId, initialMessages }: Props) {
       <div className="px-8 py-5 border-b border-line bg-panel flex items-center gap-3">
         <Bot className="text-gold" size={22} />
         <div>
-          <h2 className="font-display tracking-wide text-white">Spartan AI Sales Coach</h2>
-          <p className="text-xs text-zinc-500">Trained on JK&R&apos;s 8 modules. Ask for word tracks, frameworks, or live coaching.</p>
+          <h2 className="font-display tracking-wide text-white">Spartan AI Support</h2>
+          <p className="text-xs text-zinc-500">Trained on JK&R&apos;s 8 modules. Ask for word tracks, frameworks, or live field support.</p>
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export function CoachChat({ initialConversationId, initialMessages }: Props) {
           {messages.length === 0 && (
             <div className="text-center text-zinc-500 mt-20">
               <Bot size={48} className="mx-auto mb-4 opacity-30 text-gold" />
-              <p className="font-display tracking-wide text-lg text-white">Welcome to the Coach.</p>
+              <p className="font-display tracking-wide text-lg text-white">Welcome to JK&R Support.</p>
               <p className="text-sm mt-2">Ask about an objection, a word track, or a stage of the roadmap.</p>
             </div>
           )}

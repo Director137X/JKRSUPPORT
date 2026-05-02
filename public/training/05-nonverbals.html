@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nonverbals & Paraverbals | JK&R Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--border:#21262d;--gold:#c9a227;--text:#e6edf3;--muted:#8b949e;--dim:#484f58;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 40px 100px;}
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--text);margin:22px 0 8px;}
+  p{color:var(--muted);line-height:1.75;margin-bottom:12px;}
+  p strong{color:var(--text);font-weight:600;}
+  .mod-page-header{padding:36px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .pg-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--text);}
+  .callout{border-left:3px solid var(--gold);padding:14px 20px;margin:16px 0;background:var(--surface);}
+  .callout-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .callout p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .word-track{border-left:3px solid var(--gold);padding:14px 18px;margin:14px 0;background:var(--surface);}
+  .wt-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .word-track p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .step{border:1px solid var(--border);padding:16px 20px;margin:10px 0;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .step-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .step p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);}
+  ul.dl{list-style:none;padding:0;margin:10px 0;}
+  ul.dl li{font-size:14px;color:var(--muted);line-height:1.7;padding:4px 0 4px 18px;position:relative;}
+  ul.dl li::before{content:'4';position:absolute;left:0;color:var(--gold);font-size:12px;}
+  ul.dl li strong{color:var(--text);}
+  .dialogue{border:1px solid var(--border);padding:16px 20px;margin:14px 0;}
+  .d-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .dl-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);}
+  .dl-row:last-child{border-bottom:none;}
+  .dl-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;padding-top:2px;flex-shrink:0;color:var(--gold);}
+  .dl-s.p{color:var(--muted);}
+  .dl-t{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .box{border:1px solid var(--border);padding:14px 16px;background:var(--surface);}
+  .box-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .box p{font-size:13px;margin:0;line-height:1.6;}
+  .practice{border:1px solid var(--border);border-top:2px solid var(--gold);padding:16px 20px;margin:28px 0 0;}
+  .p-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .practice p{font-size:13.5px;margin:0;color:var(--text);line-height:1.7;}
+  .anchor-row{display:flex;align-items:center;gap:20px;padding:24px;border:1px solid var(--border);margin:14px 0;background:var(--surface);flex-wrap:wrap;}
+  .anc-item{text-align:center;flex:1;min-width:120px;}
+  .anc-amt{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+  .anc-amt.hi{color:var(--muted);}
+  .anc-amt.lo{color:var(--gold);}
+  .anc-note{font-size:11px;color:var(--dim);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .site-footer{border-top:1px solid var(--border);padding:20px 40px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .f-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);}
+  .f-copy{font-size:12px;color:var(--dim);}
+  .f-motto{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  .label-cat{margin:14px 0;padding:12px 16px;border:1px solid var(--border);}
+  .label-cat-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+  .label-list{font-size:13.5px;color:var(--muted);line-height:1.8;}
+  @media(max-width:700px){.wrap{padding-left:20px;padding-right:20px;}.grid2{grid-template-columns:1fr;}.site-footer{padding:20px;}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 40px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;"><a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c9a227;opacity:.8;">&#8592; Training Portal</a><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#484f58;">PDF 5</span></div>
+<div class="wrap">
+<div class="mod-page-header"><div class="eyebrow">PDF 5</div><div class="pg-title">Nonverbals & Paraverbals</div></div>
+
+<h2>Body Language</h2>
+<p>The interpretation of a message is 7 percent verbal, 38 percent vocal, and 55 percent visual. In other words 93% of communication is non verbal.</p>
+<ul class="dl">
+  <li><strong>7% Verbal:</strong> Spoken Words</li>
+  <li><strong>38% Vocal:</strong> Volume, Tonality, Tempo</li>
+  <li><strong>55% Visual:</strong> Body Language, Gesticulations</li>
+</ul>
+<p>How you say something is far more powerful than what you say. Nonverbal communication = suggestions. The way you say something suggests its meaning or importance.</p>
+
+<h3>Application — Locations / Steps of the Roadmap</h3>
+<ul class="dl">
+  <li>Imply it's their turn to talk or you are expecting a response</li>
+  <li>Find a home base</li>
+  <li>Hands on hips after each gesticulation to avoid unintentional suggestions. Avoid pee dancing.</li>
+  <li>Eye contact — use the 50/70 rule: maintain eye contact 50% of the time when speaking and 70% of the time when listening. Look for 4–5 seconds at a time.</li>
+  <li>Head facing the client whenever you are talking to them.</li>
+</ul>
+
+<h3>Break Preoccupation Body Language</h3>
+<ul class="dl">
+  <li>45 degree angle to not appear threatening</li>
+  <li>Body weight on back foot</li>
+  <li>Show hands to promote the appearance of harmless motives</li>
+  <li>Tilt head after asking a question to suggest openness</li>
+  <li>When pointing, use pinky finger instead of index finger to avoid directness and or confrontation</li>
+</ul>
+
+<h3>Proxemics / Spatial Awareness / Social Zones</h3>
+<ul class="dl">
+  <li>Intimate zone: 18 inches or less</li>
+  <li>Personal zone: 1.5 to 4 feet</li>
+  <li>Social zone: 2 to 12 feet</li>
+  <li>Public zone: 12 feet or greater</li>
+</ul>
+
+<h2>Paraverbals</h2>
+<p>In former FBI negotiator Chris Voss's book, he refers to the "golden communication rule" as the 7-38-55 rule. These numbers create a whole (100%). These numbers also represent something, which is the weight of importance that an avenue of communication has with a conversation/negotiation:</p>
+<ul class="dl">
+  <li>7% of what you say verbally is transmitted to the customer</li>
+  <li>38% of how you say something (tone of voice, inflection, volume, pace) is transmitted to the customer</li>
+  <li>55% of your communication happens through your body language</li>
+</ul>
+<p>For this training, we are going to focus in on Paraverbals (38%). Paraverbals can be broken down into three different sub-categories: Tone (1) of voice, Pace (2), Volume (3).</p>
+
+<h3>Tone</h3>
+<p>In order to nail down TONE in your pitch, ask yourself, have you ever had experience talking to someone that you didn't realize but was very enjoyable/entertaining to talk to? Likely the reason why is because, they have their tone nailed down. Good tone sounds affirmative, like there is absolutely no question about your statements. Good tone often ends in a down tone. Your prospects will sniff out unsurity if you do not pull this off correctly and will shut you down quicker. For experienced reps, often the reason you can be on a hot streak is because you down tone, which translates to the customer as confidence, absolute security, conviction, authority.</p>
+<p>Bad tone ends in uptone. Often those that uptone naturally have a hard time getting through their pitch throughout the day. Bad tone sounds like a question, sometimes even without a question being asked. This is a good habit to break if you naturally uptone.</p>
+
+<div class="grid2">
+  <div class="box">
+    <div class="box-title">Bad — Up-Tone</div>
+    <p>"There should've been a notice sent out about the windows do you remember seeing that?" <em>(ends as a question, sounds unsure)</em></p>
+  </div>
+  <div class="box">
+    <div class="box-title">Good — Down-Tone</div>
+    <p>"There should've been a notice sent out about the windows. Do you remember seeing that?" <em>(authoritative, affirmative, confident)</em></p>
+  </div>
+</div>
+
+<h3>Pace</h3>
+<p>Often what pairs well with a down-tone or an up-tone is a slight pause; this is called "pacing." In other words it is intentional pausing. Pay attention also to the speed at which you speak. Slower is always better; it allows the prospect to really gather the information you're delivering and have an educated dialogue with you... which allows you a fighting chance to show them the features and benefits of your product.</p>
+<p>When someone speaks to you really fast, especially someone you don't know that just approached you in your driveway or on your doorstep your mind goes into fight or flight mode and wants to end that conversation as quickly as possible. It's uncomfortable and they feel threatened. Its not that you're actually harmful, that's just the message that you're portraying by trying to spew your message quickly. Remember, speak about <strong>30% Slower than normal</strong>, and intentionally pause for about a quarter second when you want the customer to pick up on important info.</p>
+
+<div class="grid2">
+  <div class="box">
+    <div class="box-title">Bad — No Pauses, Rushed</div>
+    <p>"Hey, I'm just following up on a notice sent out about the windows do you remember seeing that?"</p>
+  </div>
+  <div class="box">
+    <div class="box-title">Good — Intentional Pausing</div>
+    <p>"Hey... I'm just following up | on a notice sent out | about the windows — do you remember seeing that?"</p>
+  </div>
+</div>
+
+<p>Good thing to remember is this is a hack to help yourself gather your thoughts throughout the pitch and make sure you're thinking clearly on your feet. Pulled off correctly you will have lots of long conversations and be able to roll objections and customers should be asking buying questions.</p>
+
+<h3>Volume</h3>
+<p>What does good volume look like? Volume is situational. When I first start talking to someone I want to establish authority, so think police officer. After I've moved them off the door and we're a little bit more into the pitch my tone is going to change, be a little bit more like their tone. If they are lower volume, I will be lower volume. If they are loud and upset about the rate increases I will be loud and upset about the rate increases. Although volume is not as important as the other two sub-categories, this can also be the reason you can lose sets with potential buyers.</p>
+
+<div class="grid2">
+  <div class="box">
+    <div class="box-title">Bad — Loud and Commanding</div>
+    <p>"SO THE WAY WE GET THOSE REPORTS IS BASED OFF OF THE PROTECTION OF THE HOME, HAVE YOU EVER SEEN ONE OF THESE?" — Often if you come off as too bullish at this point people will reciprocate that and shut down the conversation.</p>
+  </div>
+  <div class="box">
+    <div class="box-title">Good — Soft but Affirmative</div>
+    <p>"So the way we get those reports is based off of the protection of the home... have you ever seen one of these?" — Pulls them in, commands respect.</p>
+  </div>
+</div>
+
+<p>Paraverbals is one of the most important skills to master in door-to-door sales. It bolsters your professionalism and lowers their walls with you as a sales rep. If you learn and master these skills well, you will have a much easier time pulling policies, getting appointments and getting closes. Ultimately, you'll feel the job become less like a task and more like a game. To those that have mastered this skill you'll often find that they really do enjoy knocking and connecting with people.</p>
+
+<div class="practice">
+  <div class="p-label">Practice</div>
+  <p>Practice on your friends and try to meet some new people:</p>
+  <ul class="dl" style="margin-top:8px;">
+    <li>Be affirmative</li>
+    <li>Practice your down-tones in the mirror</li>
+    <li>Try to make a habit of only up-toning on questions</li>
+    <li>In conversations introduce intentional slight pauses</li>
+    <li>Try to match people's volume</li>
+  </ul>
+</div>
+
+<h2>Mirroring</h2>
+<p>In the world of sales, establishing rapport is not just a nicety; it's a critical component of the conversation that can significantly influence outcomes. One powerful technique for building that rapport is mirroring — both physically and verbally. When executed effectively, mirroring can create a sense of connection that encourages prospects to open up and share valuable insights.</p>
+
+<h3>What — Understanding Mirroring</h3>
+<p>Mirroring involves subtly mimicking the body language and verbal cues of your conversation partner. This technique can be divided into two primary forms:</p>
+<ul class="dl">
+  <li><strong>Physical Mirroring:</strong> This involves imitating the prospect's body language. For instance, if they cross their arms, you might do the same. If they lean forward, you lean forward too. The goal is to create a subconscious connection that makes the prospect feel more comfortable and understood.</li>
+  <li><strong>Verbal Mirroring:</strong> This entails reflecting back what the prospect has said, particularly key phrases or emotional expressions. By repeating their words with an inquisitive tone, you encourage them to elaborate on their thoughts, revealing deeper insights that may not have been immediately shared.</li>
+</ul>
+
+<h3>Why — The Importance of Mirroring</h3>
+<ul class="dl">
+  <li><strong>Building Silent Rapport:</strong> Mirroring creates a sense of familiarity and ease, allowing the prospect to feel more at home in the conversation. This silent rapport can pave the way for more open communication.</li>
+  <li><strong>Uncovering Hidden Motives:</strong> Often, the initial objections or reasons prospects share are just surface-level smoke screens. By mirroring their concerns, you can encourage them to delve deeper and reveal the underlying issues that may be affecting their decision-making process.</li>
+  <li><strong>Enhancing Engagement:</strong> When you mirror someone's language and body movements, it shows that you're actively listening and engaged in the conversation. This fosters a stronger connection and enhances the likelihood of a productive dialogue.</li>
+</ul>
+
+<h3>How — Implementing Mirroring Techniques</h3>
+<p><strong>Physical Mirroring:</strong> Observe the prospect's body language closely. If they cross their arms, wait a moment, and then cross your arms too. If they lean forward, do the same. Ensure your movements are subtle; the goal is to create a sense of synchronicity without being overtly obvious.</p>
+<p><strong>Verbal Mirroring:</strong> Listen attentively to what the prospect says, paying close attention to key phrases or emotional cues. When they share an important point, repeat it back with an inquisitive tone.</p>
+
+<div class="dialogue">
+  <div class="d-label">Example — Verbal Mirroring</div>
+  <div class="dl-row"><span class="dl-s p">Prospect</span><span class="dl-t">"I already looked at it in the past. I'm not interested; it didn't make sense."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Didn't make sense???" (with an up-tone and head tilt — this prompts them to elaborate further)</span></div>
+</div>
+
+<div class="dialogue">
+  <div class="d-label">Engaging in Dialogue — Reveal More Emotion and Detail</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Have you noticed any jump in the premium?"</span></div>
+  <div class="dl-row"><span class="dl-s p">Prospect</span><span class="dl-t">"Yeah, my premium's gone up a bit."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"It's gone up a bit???" (tilting head, curious up-tone)</span></div>
+  <div class="dl-row"><span class="dl-s p">Prospect</span><span class="dl-t">"Well, yeah! It used to be $1500, and now this summer it was $2500."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Oh wow... $2500???"</span></div>
+  <div class="dl-row"><span class="dl-s p">Prospect</span><span class="dl-t">"Yes, it's ridiculous! They keep jacking up prices!"</span></div>
+</div>
+
+<p><strong>Conclusion:</strong> Incorporating mirroring into your sales strategy can dramatically enhance your ability to connect with prospects and uncover their true needs. By understanding the nuances of both physical and verbal mirroring, you can create a more engaging and meaningful dialogue. This technique not only builds rapport but also empowers you to navigate past initial objections, ultimately leading to more effective sales conversations. Embrace the power of mirroring, and watch as it transforms your interactions with potential customers, allowing you to forge deeper connections and drive greater success.</p>
+
+</div>
+<footer class="site-footer"><div class="f-brand">JK&amp;R Construction Inc.</div><div class="f-copy">Tampa, FL &mdash; Internal Training System</div><div class="f-motto">Full Faith &middot; Full Force &middot; Forward</div></footer>
+</body>
+</html>

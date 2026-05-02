@@ -55,23 +55,31 @@ export async function POST(req: Request) {
 
   const ordered = (history ?? []).reverse();
 
-  // Stream from Claude
-  const stream = await anthropic.messages.stream({
-    model: COACH_MODEL,
-    max_tokens: 1024,
-    system: [{ type: 'text', text: COACH_SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-    messages: ordered.map((m) => ({
-      role: m.role as 'user' | 'assistant',
-      content: m.content,
-    })),
-  });
+  let stream;
+  try {
+    stream = await anthropic.messages.stream({
+      model: COACH_MODEL,
+      max_tokens: 1024,
+      system: [{ type: 'text', text: COACH_SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
+      messages: ordered.map((m) => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      })),
+    });
+  } catch (err) {
+    console.error('[coach] anthropic stream init failed:', err);
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json(
+      { error: 'AI request failed', detail: message, conversationId },
+      { status: 502 },
+    );
+  }
 
   const encoder = new TextEncoder();
   let fullText = '';
 
   const readable = new ReadableStream({
     async start(controller) {
-      // Send the conversation ID first so the client can update its URL
       controller.enqueue(
         encoder.encode(`event: meta\ndata: ${JSON.stringify({ conversationId })}\n\n`),
       );
@@ -86,7 +94,6 @@ export async function POST(req: Request) {
           }
         }
 
-        // Persist assistant reply
         await supabase.from('messages').insert({
           conversation_id: conversationId,
           role: 'assistant',
@@ -95,8 +102,10 @@ export async function POST(req: Request) {
 
         controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
       } catch (err) {
+        console.error('[coach] anthropic stream error:', err);
+        const message = err instanceof Error ? err.message : String(err);
         controller.enqueue(
-          encoder.encode(`event: error\ndata: ${JSON.stringify({ message: String(err) })}\n\n`),
+          encoder.encode(`event: error\ndata: ${JSON.stringify({ message })}\n\n`),
         );
       } finally {
         controller.close();

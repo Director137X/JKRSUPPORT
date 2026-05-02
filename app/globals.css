@@ -4,6 +4,24 @@
 
 :root {
   color-scheme: dark;
+
+  /* JK&R PORTAL brand tokens */
+  --portal-bg: #000000;
+  --portal-surface-1: #0A0A0A;
+  --portal-surface-2: #050505;
+  --portal-hairline: #1A1A1A;
+  --portal-inner: #1F1F1F;
+  --portal-text: #F5F5F5;
+  --portal-mute: #8A8A8A;
+  --portal-tertiary: #4A4A4A;
+  --portal-gold: #C9A961;
+  --portal-gold-hover: #D9B871;
+  --portal-gold-deep: #6B5530;
+  --portal-error: #B84A3F;
+  --portal-success: #6E8B5A;
+
+  --portal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --portal-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html, body {
@@ -54,4 +72,62 @@ body {
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #2A2E35;
   border-radius: 3px;
+}
+
+/* Portal field underline draw-in */
+.portal-field-underline {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0%;
+  background: var(--portal-gold);
+  transition: width 280ms var(--portal-ease);
+  pointer-events: none;
+}
+.portal-field-wrap:focus-within .portal-field-underline {
+  width: 100%;
+}
+
+/* Portal button hover glow */
+.portal-button {
+  position: relative;
+  transition:
+    background-color 220ms var(--portal-ease),
+    color 220ms var(--portal-ease),
+    border-color 220ms var(--portal-ease),
+    box-shadow 220ms var(--portal-ease);
+}
+.portal-button:hover:not(:disabled) {
+  background-color: var(--portal-gold);
+  color: #000;
+  box-shadow: 0 0 0 1px rgba(201, 169, 97, 0.2), 0 0 12px rgba(201, 169, 97, 0.2);
+}
+.portal-button:hover:not(:disabled) .portal-button-chevron {
+  transform: translateX(4px);
+}
+.portal-button:active:not(:disabled) {
+  background-color: var(--portal-gold-deep);
+  transition-duration: 0ms;
+}
+.portal-button-chevron {
+  transition: transform 220ms var(--portal-ease);
+}
+
+/* Caret + selection inside portal */
+.portal-input {
+  caret-color: var(--portal-gold);
+}
+.portal-input::selection {
+  background: var(--portal-gold-deep);
+  color: #fff;
+}
+
+/* Reduced-motion: collapse the entrance sequence to a 200ms fade. */
+@media (prefers-reduced-motion: reduce) {
+  .portal-reduced-motion,
+  .portal-reduced-motion * {
+    animation-duration: 200ms !important;
+    transition-duration: 200ms !important;
+  }
 }

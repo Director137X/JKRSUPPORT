@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery, Pull Back & Environmental Shift | JK&R Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--border:#21262d;--gold:#c9a227;--text:#e6edf3;--muted:#8b949e;--dim:#484f58;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 40px 100px;}
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--text);margin:22px 0 8px;}
+  p{color:var(--muted);line-height:1.75;margin-bottom:12px;}
+  p strong{color:var(--text);font-weight:600;}
+  .mod-page-header{padding:36px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .pg-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--text);}
+  .callout{border-left:3px solid var(--gold);padding:14px 20px;margin:16px 0;background:var(--surface);}
+  .callout-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .callout p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .word-track{border-left:3px solid var(--gold);padding:14px 18px;margin:14px 0;background:var(--surface);}
+  .wt-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .word-track p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .step{border:1px solid var(--border);padding:16px 20px;margin:10px 0;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .step-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .step p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);}
+  ul.dl{list-style:none;padding:0;margin:10px 0;}
+  ul.dl li{font-size:14px;color:var(--muted);line-height:1.7;padding:4px 0 4px 18px;position:relative;}
+  ul.dl li::before{content:'4';position:absolute;left:0;color:var(--gold);font-size:12px;}
+  ul.dl li strong{color:var(--text);}
+  .dialogue{border:1px solid var(--border);padding:16px 20px;margin:14px 0;}
+  .d-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .dl-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);}
+  .dl-row:last-child{border-bottom:none;}
+  .dl-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;padding-top:2px;flex-shrink:0;color:var(--gold);}
+  .dl-s.p{color:var(--muted);}
+  .dl-t{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0;}
+  .box{border:1px solid var(--border);padding:14px 16px;background:var(--surface);}
+  .box-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .box p{font-size:13px;margin:0;line-height:1.6;}
+  .practice{border:1px solid var(--border);border-top:2px solid var(--gold);padding:16px 20px;margin:28px 0 0;}
+  .p-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .practice p{font-size:13.5px;margin:0;color:var(--text);line-height:1.7;}
+  .anchor-row{display:flex;align-items:center;gap:20px;padding:24px;border:1px solid var(--border);margin:14px 0;background:var(--surface);flex-wrap:wrap;}
+  .anc-item{text-align:center;flex:1;min-width:120px;}
+  .anc-amt{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+  .anc-amt.hi{color:var(--muted);}
+  .anc-amt.lo{color:var(--gold);}
+  .anc-note{font-size:11px;color:var(--dim);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .site-footer{border-top:1px solid var(--border);padding:20px 40px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .f-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);}
+  .f-copy{font-size:12px;color:var(--dim);}
+  .f-motto{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  .label-cat{margin:14px 0;}
+  .label-cat-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .label-list{font-size:13.5px;color:var(--muted);line-height:1.8;}
+  @media(max-width:700px){.wrap{padding-left:20px;padding-right:20px;}.grid2,.grid3{grid-template-columns:1fr;}.site-footer{padding:20px;}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 40px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;">
+  <a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c9a227;opacity:.8;">&#8592; Training Portal</a>
+  <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#484f58;">PDF 3</span>
+</div>
+<div class="wrap">
+<div class="mod-page-header">
+  <div class="eyebrow">PDF 3</div>
+  <div class="pg-title">Discovery, Pull Back & Environmental Shift</div>
+</div>
+
+<h2>Discovery</h2>
+<p>Your first question after mentioning impact windows should focus on understanding what has held them back from pursuing it in the past. This approach allows you to gather valuable insights while building rapport and trust with the homeowner. When you ask, "Why haven't you guys done that yet?" most homeowners may initially respond with negative sentiment. It's important to approach this with curiosity rather than being invasive. Your goal is to listen actively to their concerns, validate their feelings, and gently guide the conversation toward the positives of impact windows.</p>
+
+<h3>Why</h3>
+<p>Understanding the importance of the discovery process is essential for several reasons. By listening to the homeowner's reasons for hesitance, you demonstrate empathy and understanding. This builds trust and helps create a more comfortable environment for them to share their thoughts. Each reason they provide will give you valuable insights into their objections and concerns. This information is critical for tailoring your pitch to address their specific needs and apprehensions. Once you have a clear understanding of their turnoffs, you can effectively pivot the conversation to highlight the benefits of impact windows that align with their priorities. This strategic transition is key to moving them closer to a positive decision.</p>
+
+<h3>How — 6 Steps</h3>
+<p>To effectively navigate the discovery process while maintaining rapport and guiding the conversation, follow these steps:</p>
+
+<div class="step">
+  <div class="step-num">Step 1</div>
+  <div class="step-title">Introduce the Topic</div>
+  <p>After discussing windows, ask your opening exploratory question: "Why haven't you guys done that yet?" This question invites them to share their reasons without feeling pressured.</p>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 2</div>
+  <div class="step-title">Validate Their Responses</div>
+  <p>As they provide reasons for their hesitance, agree with them and affirm their feelings. A simple fist bump can help reinforce this connection and build a sense of camaraderie.</p>
+  <div class="word-track" style="margin-top:10px;">
+    <div class="wt-label">Word Track</div>
+    <p>"You're absolutely right; I can see why you feel that way. I'm actually glad you haven't done it yet."</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 3</div>
+  <div class="step-title">Explore Additional Concerns</div>
+  <p>After acknowledging their reasons, ask if there's more. Gather all objections before pivoting.</p>
+  <div class="word-track" style="margin-top:10px;">
+    <div class="wt-label">Word Track</div>
+    <p>"Was that the only reason you haven't pursued it, or is there anything else that held you back?"</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 4</div>
+  <div class="step-title">Transition to Positives</div>
+  <p>Once they indicate that their initial reason is the primary concern, seize the opportunity to pivot the conversation.</p>
+  <div class="word-track" style="margin-top:10px;">
+    <div class="wt-label">Word Track</div>
+    <p>"There are a few reasons why someone would consider impact windows in the first place." Then list: save money / protect from inflation / help prevent hurricane damage / secure the home better.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 5</div>
+  <div class="step-title">Identify Their Priorities</div>
+  <p>Ask them which of these features resonates most, then dig deeper to uncover their motivations.</p>
+  <div class="word-track" style="margin-top:10px;">
+    <div class="wt-label">Word Track</div>
+    <p>"Which one would be your priority? ... For sure. I don't mean to pry, but this might sound like a silly question — what would you want to use the savings for? Would it be the water bill, groceries, or maybe a trip?"</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 6</div>
+  <div class="step-title">Discover Their Motivations — Map XYZ and ABC</div>
+  <p>By identifying what they care about, you gather important information about what they value. You will now have a clear understanding of their turnoffs (XYZ) and their motivations (ABC). This knowledge empowers you to construct an offer that feels too beneficial for them to decline.</p>
+</div>
+
+<p>By mastering the discovery process, you can effectively engage homeowners, address their concerns, and highlight the compelling reasons to consider impact windows. This approach not only builds trust but also positions you to present an offer that resonates deeply with their values and needs.</p>
+
+<h2>Pull Back</h2>
+<p><strong>What:</strong> The pull back is a strategic technique used in door-to-door sales designed to create a sense of exclusivity and scarcity around your offer. This technique occurs after you've established rapport and presented the benefits of your product or service. The primary goal of the pull back is to retain control of the conversation and of their upcoming actions. By pulling back, you communicate that your offer is not just readily available to everyone, which enhances its perceived value. This method also cultivates a sense of urgency, prompting the homeowner to act quickly rather than delaying their decision or seeking information elsewhere.</p>
+
+<h3>Why</h3>
+<ul class="dl">
+  <li><strong>Creating Exclusivity:</strong> People are inherently drawn to things that are scarce or exclusive. By framing your offer as something that not everyone can have, you increase its value in the eyes of the homeowner. This approach makes them feel special and encourages them to take your offer seriously.</li>
+  <li><strong>Establishing Urgency:</strong> When you create a paradigm of scarcity, you instill a sense of urgency in the homeowner. This urgency can motivate them to make a quicker decision, increasing the likelihood that they'll sit down and sign with you rather than postponing the conversation.</li>
+  <li><strong>Regaining Control:</strong> The pull back serves to regain control over the sales conversation. If you don't pull back, the homeowner may feel empowered by their interest and could attempt to take the lead by researching independently or delaying their decision. The pull back reinforces that you are the one holding the key benefits and that a decision should be made in the context of your offer.</li>
+</ul>
+
+<h3>How — Pull Back Phrases</h3>
+<ul class="dl">
+  <li>"I don't want to get ahead of myself because..."</li>
+  <li>"There's limited funding."</li>
+  <li>"They only select X homes per zip code."</li>
+  <li>"It's an extremely selective program."</li>
+  <li>"It may not be a good fit for the state."</li>
+  <li>"They could choose someone else."</li>
+  <li>"They could pick someone else."</li>
+  <li>"It may not pencil out for the state."</li>
+</ul>
+
+<h2>Making an Offer</h2>
+<p>When it comes to getting a homeowner to agree to taking a look at impact windows, making an offer correctly is the most critical step. An offer allows the customer to buy in to what we are offering. It creates structure and a framework for the customer to fall in to. Allowing you to move onto the next step of the roadmap.</p>
+<p>Making a good offer consists of:</p>
+<ul class="dl">
+  <li>Taking away the negatives</li>
+  <li>Highlighting the Benefits</li>
+  <li>Labeling (See Labels section)</li>
+  <li>Inverse Close</li>
+</ul>
+<p>When you make the offer you will first simply take away all of their reasons for not doing windows in the past (negatives).</p>
+
+<div class="word-track">
+  <div class="wt-label">Offer Formula</div>
+  <p>"So assuming you didn't have to worry about (X, Y, Z Negatives)..."</p>
+  <p style="margin-top:6px;"><strong>Full Example:</strong> "So assuming you didn't have to worry about messy drywall repairs and getting a higher premium from the insurance company..."</p>
+</div>
+
+<p>Now we are going to highlight the benefits of our program. Benefits are defined as the actual value added to the customer's life usually relating more to emotion rather than logic. The benefits are not simply features. For example, if I am selling an iphone and I am mentioning the phone's storage capacity. The storage capacity (100GB) is the feature, while the benefit is that the customer will be able to store all of their pictures so they can forever have access to all of their favorite memories. The benefit is designed to trigger an emotional response in the customer's brain. In terms of impact windows some common features are savings ($1500 premium instead of a $3500 premium), predictable rates (dropping insurance), the ability to be safe (Full wind mitigation credit). Some examples of benefits could be as follows:</p>
+<ul class="dl">
+  <li>"With the savings you'd get you can now afford to put the money into a savings account so you can help build wealth for your future family."</li>
+  <li>"With the predictable rate you now don't have to worry about getting a surprise insurance bill that throws off your budget and stresses you out. Potentially making you have to ask people to borrow money or take out a loan to get by."</li>
+  <li>"With the extra efficiency we'd give you you can now live comfortably in your home during the Florida summers and not have to constantly sweat all the time from poor insulation."</li>
+</ul>
+<p>It is important to note that the benefits will be different for each customer. You will find out the benefits during the discovery portion of the road map and digging multiple layers deep to really pull all of them out.</p>
+
+<div class="word-track">
+  <div class="wt-label">Benefits Formula</div>
+  <p>"...and we were able to get you (X, Y, Z Benefits)..."</p>
+  <p style="margin-top:6px;"><strong>Full Example:</strong> "...and we were able to get you the savings you wanted so you can afford to potentially save up for a vacation to Hawaii and help put the money towards other bills so you are less stressed..."</p>
+</div>
+
+<p>Always remember to "Label" the customer in accordance with how you want them to think. For example if you want a logical response from a customer you can say, "you seem like a pretty logical guy..." This is just a small psychological trick you can use to get your customer's mind primed.</p>
+<p>To finalize your offer you will ask the customer for the set by using an Inverse Close. People always feel more comfortable saying no.</p>
+
+<h2>Environmental Shift / Getting the Bill</h2>
+<p><strong>What:</strong> In the world of sales, the environment in which we engage with customers can be as crucial as the words we choose. The "Environmental Shift" is not merely a tactic; it's an art form that transforms a mundane doorstep interaction into a dynamic conversation. The essence of this approach is to guide the customer away from their comfort zone — the doorstep — and into a space where dialogue can thrive.</p>
+
+<h3>Why — The Power of Motion in Creating Emotion</h3>
+<p>Why is this shift so vital? Because motion creates emotion. When we physically move, we activate a change within ourselves and those around us. By taking the customer a few steps away from their doorstep, we break the invisible barrier of their "no zone." Suddenly, they're no longer in their own "office" — they're stepping into yours. This subtle shift in space fosters openness and receptivity, allowing the conversation to flow more naturally.</p>
+<p>Consider this: when we move, we engage not just our bodies but our minds and hearts. The act of walking together creates a shared experience, a moment of connection that can dissolve tension and skepticism. In this new space, the dynamics of the conversation change, allowing you to guide the customer towards possibilities they hadn't considered before.</p>
+
+<h3>How — Strategies for Executing the Environmental Shift</h3>
+<p><strong>1. Using Visual Cues:</strong> Leverage the environment around you to create movement and dialogue.</p>
+<ul class="dl">
+  <li><strong>Old Window Frames:</strong> "You see these old aluminum frames over here? Notice how the seals are pulling and creating stress on the house and letting in air." — As you point, gently guide them towards this visual anchor, encouraging them to follow.</li>
+  <li><strong>Sliding Glass Door:</strong> "Do you know how much draft you're pulling through here?" / "Let's take a quick look at your slider — it's an eye-opener!" / "Have you heard about the new impact ratings? They're game changers!"</li>
+  <li><strong>AC Unit:</strong> "What type of AC unit do you have? Is it energy-efficient?" / "Is it keeping up with this Florida summer heat?" / "Have you considered upgrading windows for better efficiency?"</li>
+  <li><strong>Garage:</strong> "Is your garage insulated? A lot of neighbors found their bills higher because of cold air escaping."</li>
+  <li><strong>Window:</strong> "Some neighbors have opted for impact double-paned windows to combat air leakage and hurricanes. Have you made similar upgrades?"</li>
+</ul>
+
+<p><strong>2. Environmental Shift After a Negative Response:</strong></p>
+<ul class="dl">
+  <li><strong>Identify the Negative Moment:</strong> Listen attentively as the homeowner shares their frustrations. Acknowledge their feelings. "I understand your hesitation; many have faced similar challenges."</li>
+  <li><strong>Initiate the Environmental Shift:</strong> "Let's step over to your side windows — it'll help illustrate how things have transformed."</li>
+  <li><strong>Change the Tone to Positive:</strong> "Technology has advanced significantly; you can now secure everything right to standard."</li>
+  <li><strong>Rebuild Trust and Positivity:</strong> Focus on the benefits: safety, independence, savings, and a positive home impact. "I think you'll be pleasantly surprised by how seamless this process is now."</li>
+</ul>
+
+<p><strong>3. Advanced Strategies — Getting the Bill Early:</strong></p>
+<ul class="dl">
+  <li><strong>Prepare the Stage:</strong> Before asking for the bill, establish rapport through three key components: Breaking Pre-occupation, Off-Door Movement, Justification.</li>
+  <li><strong>Tying the Bill to the Story:</strong> Relate the bill to the broader narrative of insurance changes and customer experiences. "They didn't just send me out here to talk about projects; I'm here to help you navigate the financial implications."</li>
+</ul>
+
+<p><strong>Conclusion:</strong> The Environmental Shift is more than a sales strategy; it's a dance of connection and understanding. By recognizing that motion creates emotion, you can unlock the potential for transformative conversations with your customers. Each step you take together is an opportunity to build rapport, alleviate tension, and shift the narrative from skepticism to possibility. As you master this art form, remember: every interaction is an opportunity to lead your customer into a new space — both physically and emotionally. Embrace the movement, and watch as your conversations blossom into meaningful engagements, paving the way for successful sales.</p>
+
+</div>
+<footer class="site-footer">
+  <div class="f-brand">JK&amp;R Construction Inc.</div>
+  <div class="f-copy">Tampa, FL &mdash; Internal Training System</div>
+  <div class="f-motto">Full Faith &middot; Full Force &middot; Forward</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Humanizing Questions, Labels & QBS | JK&R Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--border:#21262d;--gold:#c9a227;--text:#e6edf3;--muted:#8b949e;--dim:#484f58;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 40px 100px;}
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--text);margin:22px 0 8px;}
+  p{color:var(--muted);line-height:1.75;margin-bottom:12px;}
+  p strong{color:var(--text);font-weight:600;}
+  .mod-page-header{padding:36px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .pg-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--text);}
+  .callout{border-left:3px solid var(--gold);padding:14px 20px;margin:16px 0;background:var(--surface);}
+  .callout-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .callout p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .word-track{border-left:3px solid var(--gold);padding:14px 18px;margin:14px 0;background:var(--surface);}
+  .wt-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .word-track p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .step{border:1px solid var(--border);padding:16px 20px;margin:10px 0;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .step-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .step p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);}
+  ul.dl{list-style:none;padding:0;margin:10px 0;}
+  ul.dl li{font-size:14px;color:var(--muted);line-height:1.7;padding:4px 0 4px 18px;position:relative;}
+  ul.dl li::before{content:'4';position:absolute;left:0;color:var(--gold);font-size:12px;}
+  ul.dl li strong{color:var(--text);}
+  .dialogue{border:1px solid var(--border);padding:16px 20px;margin:14px 0;}
+  .d-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .dl-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);}
+  .dl-row:last-child{border-bottom:none;}
+  .dl-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;padding-top:2px;flex-shrink:0;color:var(--gold);}
+  .dl-s.p{color:var(--muted);}
+  .dl-t{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .box{border:1px solid var(--border);padding:14px 16px;background:var(--surface);}
+  .box-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .box p{font-size:13px;margin:0;line-height:1.6;}
+  .practice{border:1px solid var(--border);border-top:2px solid var(--gold);padding:16px 20px;margin:28px 0 0;}
+  .p-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .practice p{font-size:13.5px;margin:0;color:var(--text);line-height:1.7;}
+  .anchor-row{display:flex;align-items:center;gap:20px;padding:24px;border:1px solid var(--border);margin:14px 0;background:var(--surface);flex-wrap:wrap;}
+  .anc-item{text-align:center;flex:1;min-width:120px;}
+  .anc-amt{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+  .anc-amt.hi{color:var(--muted);}
+  .anc-amt.lo{color:var(--gold);}
+  .anc-note{font-size:11px;color:var(--dim);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .site-footer{border-top:1px solid var(--border);padding:20px 40px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .f-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);}
+  .f-copy{font-size:12px;color:var(--dim);}
+  .f-motto{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  .label-cat{margin:14px 0;padding:12px 16px;border:1px solid var(--border);}
+  .label-cat-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+  .label-list{font-size:13.5px;color:var(--muted);line-height:1.8;}
+  @media(max-width:700px){.wrap{padding-left:20px;padding-right:20px;}.grid2{grid-template-columns:1fr;}.site-footer{padding:20px;}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 40px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;"><a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c9a227;opacity:.8;">&#8592; Training Portal</a><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#484f58;">PDF 6</span></div>
+<div class="wrap">
+<div class="mod-page-header"><div class="eyebrow">PDF 6</div><div class="pg-title">Humanizing Questions, Labels & QBS</div></div>
+
+<h2>Humanizing Questions</h2>
+<p><strong>What:</strong> Humanizing questions are those that soften the tone of your asks, making them feel less like an interrogation and more like a friendly conversation. Phrases like "Just curious..." or "I don't mean to pry, but..." show that you want to understand rather than grill the prospect. These questions help create a more comfortable atmosphere for discussion.</p>
+<p><strong>Why:</strong> The value of humanizing questions lies in their ability to build trust and openness. When you approach questions gently, prospects are more likely to feel at ease and share their thoughts. On the other hand, if you come across as aggressive or bombard them with pointed questions, they may become defensive and shut down. Humanized questions encourage a more genuine exchange, which is crucial for building rapport.</p>
+<p><strong>How:</strong> To effectively use humanizing questions, focus on expressing real curiosity. Start your questions with phrases that invite conversation rather than pressure. For example, saying, "This may sound silly, but..." can help lower defenses and encourage the prospect to open up. By using this approach in your sales conversations, you create a relaxed environment that leads to deeper insights and a more productive dialogue.</p>
+
+<h3>Humanizing Phrases</h3>
+<ul class="dl">
+  <li>"For survey purposes..."</li>
+  <li>"Just curious..."</li>
+  <li>"This may be a dumb question, so go easy on me, but..."</li>
+  <li>"For research purposes..."</li>
+  <li>"I don't mean to pry, but..."</li>
+</ul>
+
+<h2>Labels</h2>
+<p><strong>What:</strong> Labeling is a communication strategy that involves making positive observations or comments about a prospect to encourage them to behave in a specific way. By labeling a prospect with desirable traits, you align their self-perception with the actions you want them to take. This technique is particularly effective in overcoming skepticism or hesitation, especially in contexts like discussing impact window solutions.</p>
+<p>For example, imagine you are at a restaurant and you want to ask a waitress for a complimentary extra scoop of ice cream. Before making your request, you might say something like, "You are such a nice and attentive waitress; I really appreciate your service!" By labeling her as "nice," you create a positive atmosphere and increase the likelihood that she will respond favorably to your request.</p>
+
+<h3>Why</h3>
+<ul class="dl">
+  <li><strong>Building Rapport:</strong> Labeling helps establish a connection between you and the prospect. When a person feels recognized and valued, they are more likely to be open to your suggestions.</li>
+  <li><strong>Influencing Behavior:</strong> By labeling someone with a positive trait, you subtly encourage them to embody that trait. For instance, if the waitress feels recognized as "attentive," she may be more inclined to go the extra mile to make your dining experience enjoyable, including considering your request for extra ice cream.</li>
+  <li><strong>Addressing Skepticism:</strong> In the context of impact windows, homeowners may have doubts or hesitations. By labeling them positively, such as saying, "You seem like someone who really cares about making smart decisions for your home," you can create a more receptive environment for discussing the benefits of window solutions. This is also referred to as verbalizing the inner dialogue.</li>
+</ul>
+
+<h3>How — Examples of Labeling</h3>
+
+<div class="label-cat">
+  <div class="label-cat-name">Smart / Knowledgeable</div>
+  <div class="label-list">"You seem like a smart guy." &mdash; "You seem like someone who does their research." &mdash; "You know what you're talking about." &mdash; "You seem like you stay informed." &mdash; "You clearly know your stuff."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Rational / Logical</div>
+  <div class="label-list">"You seem like a rational person." &mdash; "You seem like someone who thinks things through." &mdash; "You seem like you make decisions based on facts." &mdash; "You seem like a practical person."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Financially Savvy</div>
+  <div class="label-list">"You seem like someone who knows how to save." &mdash; "You like to get the best value." &mdash; "You seem like a smart investor." &mdash; "You seem like someone who plans financially." &mdash; "You seem like a smart guy with your money."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Home Improvement / Detail-Oriented</div>
+  <div class="label-list">"You take great care of your home." &mdash; "You seem like someone who's on top of things." &mdash; "You seem detail-oriented." &mdash; "You clearly care about your home's value." &mdash; "You like to keep your home in top shape."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Environmentally / Safety Conscious</div>
+  <div class="label-list">"You seem like someone who cares about storm safety." &mdash; "You seem like someone who values sustainability." &mdash; "You seem like you care about reducing your risk." &mdash; "You want to make a positive impact on your property."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Independence / Control</div>
+  <div class="label-list">"You seem like someone who wants to control your insurance." &mdash; "You seem like someone who values self-sufficiency."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Long-Term Planner</div>
+  <div class="label-list">"You seem like someone who plans ahead." &mdash; "You clearly plan for the big picture."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Tech-Savvy</div>
+  <div class="label-list">"You seem like someone who likes new technology." &mdash; "You seem interested in efficiency." &mdash; "You seem like someone who uses the latest tech."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Trustworthy / Responsible</div>
+  <div class="label-list">"You seem like someone who runs a tight ship." &mdash; "You seem like someone people rely on." &mdash; "You seem to make responsible choices."</div>
+</div>
+<div class="label-cat">
+  <div class="label-cat-name">Open-Minded / Curious</div>
+  <div class="label-list">"You seem open to new ideas." &mdash; "You seem like someone who's curious." &mdash; "You seem open to exploring options." &mdash; "You seem like someone who likes to learn." &mdash; "You seem open to hearing different solutions."</div>
+</div>
+
+<h2>Question Based Selling</h2>
+<p>In the competitive world of sales, the ability to navigate conversations effectively can be the difference between success and failure. One of the most powerful tools at a salesperson's disposal is the art of question-based selling. This method empowers sales professionals to take control of the sales conversation, guiding prospects toward a solution that meets their needs.</p>
+<p><strong>What is Question-Based Selling?</strong> Question-based selling is a sales technique that emphasizes the importance of asking strategic questions throughout the sales process. Unlike traditional selling methods that focus on presenting products or solutions upfront, question-based selling prioritizes understanding the prospect's needs, pain points, and motivations. By engaging in a dialogue driven by questions, salespeople can foster a more collaborative and receptive environment.</p>
+
+<h3>Why Use Question-Based Selling?</h3>
+<ul class="dl">
+  <li><strong>Control of the Conversation:</strong> The adage "he who asks questions controls the conversation" holds true in sales. When you ask questions, you guide the dialogue, allowing you to uncover valuable information about the prospect's needs and concerns.</li>
+  <li><strong>Building Rapport:</strong> Questions help to establish familiarity and trust between the salesperson and the prospect. By engaging with thoughtful inquiries, you demonstrate genuine interest in their situation, which can lead to a stronger relationship.</li>
+  <li><strong>Identifying Pain Points:</strong> Instead of making assumptions, asking questions enables prospects to articulate their challenges. This insight allows you to tailor your presentation to address their specific issues effectively.</li>
+  <li><strong>Lowering Sales Resistance:</strong> When prospects respond to questions, they become active participants in the conversation. This reduces their defensiveness and opens them up to considering your solutions.</li>
+  <li><strong>Enhancing Engagement:</strong> Questions create a dynamic interaction, keeping the prospect engaged and involved in the discussion. This active participation increases the likelihood of a positive outcome.</li>
+</ul>
+
+<h3>How to Implement Question-Based Selling</h3>
+
+<div class="step">
+  <div class="step-num">Step 1</div>
+  <div class="step-title">Start with Engaging Questions</div>
+  <p>Begin your interaction with questions that establish rapport and engage the prospect.</p>
+  <div class="word-track" style="margin-top:10px;"><div class="wt-label">Examples</div><p>"Is this the Martinez residence?" &mdash; "Did your neighbors mention that I would be stopping by?"</p></div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 2</div>
+  <div class="step-title">Involve the Prospect in the Discussion</div>
+  <p>As you transition into your presentation, ask questions that relate to the prospect's experiences.</p>
+  <div class="word-track" style="margin-top:10px;"><div class="wt-label">Examples</div><p>"Have you seen the construction on the windows in the area?" &mdash; "You know who they are making pay for it, right?"</p></div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 3</div>
+  <div class="step-title">Identify Pain Points</div>
+  <p>To uncover the prospect's pain points, ask targeted questions that encourage them to reflect on their situation.</p>
+  <div class="word-track" style="margin-top:10px;"><div class="wt-label">Examples</div><p>"Have you noticed a small increase in your insurance premiums recently, or a large one?" &mdash; "Are you on Citizens or another carrier?"</p></div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 4</div>
+  <div class="step-title">Isolating Objections Through Questions</div>
+  <p>Once you have established the prospect's pain points, guide the conversation toward potential solutions without making direct statements. Instead, ask.</p>
+  <div class="word-track" style="margin-top:10px;"><div class="wt-label">Examples</div><p>"Apart from the cost, was there anything else that held you back or was that pretty much it?" &mdash; "If we could guarantee full impact rating and no premium hikes, would that make sense for you?"</p></div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 5</div>
+  <div class="step-title">Address Objections with Curiosity</div>
+  <p>When objections arise, respond with curiosity rather than defensiveness.</p>
+  <div class="word-track" style="margin-top:10px;"><div class="wt-label">Examples</div><p>"Just curious, what specifically held you back in the past?" &mdash; "I don't mean to pry, but what exactly were you hoping to get out of the last time you checked into impact windows?"</p></div>
+</div>
+
+<div class="step">
+  <div class="step-num">Step 6</div>
+  <div class="step-title">Confirm Understanding and Close</div>
+  <p>Finally, confirm that you have addressed all the prospect's concerns before moving forward.</p>
+  <div class="word-track" style="margin-top:10px;"><div class="wt-label">Examples</div><p>"Was that the only reason you hesitated?" &mdash; "Is there anything else that would prevent you from making a decision today?"</p></div>
+</div>
+
+<p>Question-based selling is a powerful technique that enables sales professionals to take control of conversations, build rapport, and uncover the needs of their prospects. By prioritizing questions over statements, you can lower sales resistance and create a more engaging and productive dialogue. Embrace these principles, practice them diligently, and watch as you enhance your sales performance and achieve greater success in your career. Take control of the sale, help your customers find solutions, and reap the rewards of effective question-based selling.</p>
+
+</div>
+<footer class="site-footer"><div class="f-brand">JK&amp;R Construction Inc.</div><div class="f-copy">Tampa, FL &mdash; Internal Training System</div><div class="f-motto">Full Faith &middot; Full Force &middot; Forward</div></footer>
+</body>
+</html>

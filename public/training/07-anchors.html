@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchors / Minimize & Maximize | JK&R Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--border:#21262d;--gold:#c9a227;--text:#e6edf3;--muted:#8b949e;--dim:#484f58;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 40px 100px;}
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--text);margin:22px 0 8px;}
+  p{color:var(--muted);line-height:1.75;margin-bottom:12px;}
+  p strong{color:var(--text);font-weight:600;}
+  .mod-page-header{padding:36px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .pg-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--text);}
+  .callout{border-left:3px solid var(--gold);padding:14px 20px;margin:16px 0;background:var(--surface);}
+  .callout-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .callout p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .word-track{border-left:3px solid var(--gold);padding:14px 18px;margin:14px 0;background:var(--surface);}
+  .wt-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .word-track p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .step{border:1px solid var(--border);padding:16px 20px;margin:10px 0;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .step-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .step p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);}
+  ul.dl{list-style:none;padding:0;margin:10px 0;}
+  ul.dl li{font-size:14px;color:var(--muted);line-height:1.7;padding:4px 0 4px 18px;position:relative;}
+  ul.dl li::before{content:'4';position:absolute;left:0;color:var(--gold);font-size:12px;}
+  ul.dl li strong{color:var(--text);}
+  .dialogue{border:1px solid var(--border);padding:16px 20px;margin:14px 0;}
+  .d-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .dl-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);}
+  .dl-row:last-child{border-bottom:none;}
+  .dl-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;padding-top:2px;flex-shrink:0;color:var(--gold);}
+  .dl-s.p{color:var(--muted);}
+  .dl-t{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .box{border:1px solid var(--border);padding:14px 16px;background:var(--surface);}
+  .box-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .box p{font-size:13px;margin:0;line-height:1.6;}
+  .practice{border:1px solid var(--border);border-top:2px solid var(--gold);padding:16px 20px;margin:28px 0 0;}
+  .p-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .practice p{font-size:13.5px;margin:0;color:var(--text);line-height:1.7;}
+  .anchor-row{display:flex;align-items:center;gap:20px;padding:24px;border:1px solid var(--border);margin:14px 0;background:var(--surface);flex-wrap:wrap;}
+  .anc-item{text-align:center;flex:1;min-width:120px;}
+  .anc-amt{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+  .anc-amt.hi{color:var(--muted);}
+  .anc-amt.lo{color:var(--gold);}
+  .anc-note{font-size:11px;color:var(--dim);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .site-footer{border-top:1px solid var(--border);padding:20px 40px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .f-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);}
+  .f-copy{font-size:12px;color:var(--dim);}
+  .f-motto{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  .label-cat{margin:14px 0;padding:12px 16px;border:1px solid var(--border);}
+  .label-cat-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+  .label-list{font-size:13.5px;color:var(--muted);line-height:1.8;}
+  @media(max-width:700px){.wrap{padding-left:20px;padding-right:20px;}.grid2{grid-template-columns:1fr;}.site-footer{padding:20px;}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 40px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;"><a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c9a227;opacity:.8;">&#8592; Training Portal</a><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#484f58;">PDF 7</span></div>
+<div class="wrap">
+<div class="mod-page-header"><div class="eyebrow">PDF 7</div><div class="pg-title">Anchors / Minimize & Maximize</div></div>
+
+<h2>Anchoring</h2>
+<p>Let's start with a brief definition of what anchoring is in sales and then see how it applies to impact windows specifically and the different areas that we can use this to our benefit. <strong>Anchoring: initially presenting a high price for a product or service, marketers can make subsequent prices appear more attractive and reasonable by comparison.</strong> For example, a retailer may initially list a product at $100 and then offer a "sale" price of $75. Think of Black Friday, people really love to buy things when they are discounted. A good rule to live by as a sales rep is to understand that people hate to be sold on things but they love to buy things if they think they are getting a good deal.</p>
+<p>Applying this to impact windows is very similar. We talk in terms of rates per premium and how that corresponds to their policy. When we are breaking down a policy to someone and show them that per year they are paying $3,360. When a person gets impact windows their rate would decrease, their policy at the end of the year would be $2,520 total.</p>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Anchoring at the Door</div>
+  <p>"Right now you are paying $3,360, which doesn't sound like a lot right? Well let's look at that number times how much insurance you are paying over ten years, currently you are paying $33,600 DOLLARS! If you went impact your insurance would decrease to only $2,520 BUCKS a year. Most people who get approved for the program get locked in right around that."</p>
+</div>
+
+<div class="anchor-row">
+  <div class="anc-item"><div class="anc-amt hi">$33,600</div><div class="anc-note">10 Years — No Windows</div><div style="font-size:11px;color:var(--dim);margin-top:3px;">Use: DOLLARS</div></div>
+  <div style="color:var(--gold);font-size:22px;">&#8594;</div>
+  <div class="anc-item"><div class="anc-amt lo">$25,200</div><div class="anc-note">10 Years — With Impact</div><div style="font-size:11px;color:var(--dim);margin-top:3px;">Use: BUCKS</div></div>
+</div>
+
+<p>The reality is that the closer will go in and quote them at a price lower than that. When they see this they are pumped that they got even more savings than expected.</p>
+<p><em>Notice the difference in language. DOLLARS to BUCKS. Makes a huge difference in how the prospect looks at the overall bill. DOLLARS hits the prospect hard, while switching to BUCKS softens the blow.</em></p>
+
+<h2>Minimizing</h2>
+<p>In window sales, minimizing helps you address common concerns like upfront costs, installation complexity, and long ROI periods. It shifts the focus away from these perceived barriers and emphasizes solutions.</p>
+
+<h3>Common Objections to Minimize</h3>
+<ul class="dl">
+  <li><strong>Upfront Cost:</strong> Concerns about high installation or equipment costs.</li>
+  <li><strong>Installation Disruption:</strong> Worries about the time or complexity of installing windows.</li>
+  <li><strong>Payback Period:</strong> Uncertainty about how long it takes to see returns.</li>
+</ul>
+
+<h3>Minimizing Strategies</h3>
+<ul class="dl">
+  <li><strong>Acknowledge &amp; Reframe:</strong> "Yes, there's an upfront cost, but with financing options and state grants, you can start saving from day one with little to absolutely no out-of-pocket expense."</li>
+  <li><strong>Leverage Industry Data:</strong> "I understand you're worried about the installation, but 90% of our installations are completed within a day or two, with minimal disruption."</li>
+  <li><strong>Focus on Savings — Cash Deal:</strong> "While it may take 6-8 years to see a full return, you'll see your insurance bills drop by up to 80% immediately."</li>
+  <li><strong>With Financing:</strong> "Since you are not spending any money out of pocket for the installation or purchasing the windows themselves you see savings day 1."</li>
+</ul>
+
+<h3>Minimizing — Role-Play Scenarios</h3>
+<div class="dialogue">
+  <div class="d-label">Scenario 1: Upfront Cost</div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"The installation cost seems really high."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"I understand, but with current incentives like the state programs, you can save a significant amount upfront. Also we specialize in financing where you actually have ZERO up front cost, making it much more affordable."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Scenario 2: Installation Complexity</div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"I'm worried that installing windows will disrupt my life."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"We hear that often, but most installations are completed within a day or two. Our team takes care of all the permits and paperwork, so you can sit back and relax."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Scenario 3: Payback Period</div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"I've heard it takes a long time to break even on windows."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"While it typically takes 6-8 years to break even, the insurance savings you see from day one are immediate. And with impact windows lasting 25-30 years, you're essentially getting free protection for decades after you've recouped your investment."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Scenario 4: Full Minimizing Response</div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"I'm worried that impact windows are too expensive upfront."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Absolutely and you would have been completely correct 10 years ago. Now it is completely different. Now you can get windows on the home for nothing out of pocket and start seeing your savings instantly."</span></div>
+</div>
+
+<h2>Maximizing</h2>
+<p>Maximizing involves highlighting the massive long-term savings, safety benefits, and hurricane independence impact windows provides, turning the customer's focus on the bigger picture.</p>
+
+<h3>Benefits to Maximize</h3>
+<ul class="dl">
+  <li><strong>Long-term Savings:</strong> Reducing or eliminating insurance bills.</li>
+  <li><strong>Increased Home Value:</strong> Impact windows can increase the value of a home.</li>
+  <li><strong>Safety Impact:</strong> Reducing storm risk and promoting security.</li>
+  <li><strong>Inflation Guard:</strong> Avoiding the drastic and inconsistent rate increases the insurance companies impose (Citizens &amp; TECO go up 17%–20% every year).</li>
+</ul>
+
+<h3>Maximizing Strategies</h3>
+<ul class="dl">
+  <li>"With the Florida programs, you can save on your system, and your windows will continue to produce safety and savings for decades."</li>
+  <li>"With financing you don't actually spend any money upfront on the system, rather you just get to secure your home at a reduced rate."</li>
+  <li>"Installing impact windows is like putting a fortress around your family every year — that's the kind of impact you can make."</li>
+  <li>"By getting impact windows, you're no longer reliant on fluctuating insurance rates, giving you more control over your home's future."</li>
+</ul>
+
+<h3>Maximizing — Role-Play Scenarios</h3>
+<div class="dialogue">
+  <div class="d-label">Highlight Long-Term Savings</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Did you know the average homeowner saves over $20,000 on insurance bills over the lifetime of their window system? That's money you'll keep instead of giving to the insurance company."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Increase Home Value</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Studies show that homes with impact windows sell for up to 4% more than those without. This isn't just a home improvement — it's an investment in the value of your property."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Environmental / Safety Impact</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Getting impact windows reduces your hurricane risk significantly. It's one of the best things you can do for the security of your home."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Energy Independence &amp; Security</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"With impact windows, you gain independence from rising insurance costs, and you'll even have backup security during storms."</span></div>
+</div>
+<div class="dialogue">
+  <div class="d-label">Scenario: Maximizing Long-Term Benefits</div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"I'm not sure if impact windows are worth it in the long run."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"With your current situation you will see an increase of 17%–20% every single year. With impact windows you have an inflation guard that protects you from that."</span></div>
+</div>
+
+<h2>Recap &amp; Action Steps</h2>
+<ul class="dl">
+  <li><strong>Minimize Objections:</strong> Use data and real-world examples to reduce concerns about cost, installation, and payback periods.</li>
+  <li><strong>Maximize Value:</strong> Focus on the long-term savings, safety, and increased home value to showcase the benefits of impact windows.</li>
+  <li><strong>Practice:</strong> Regularly engage in role-playing scenarios to strengthen your minimizing and maximizing skills in sales conversations.</li>
+</ul>
+
+<div class="callout" style="margin-top:20px;">
+  <div class="callout-label">Conclusion</div>
+  <p>1. Anchoring is the process of presenting an item at a high price and then showing them a lower price to make it more appetizing for the prospect.<br><br>
+  2. Minimizing is the process of making objections seem like they are not a big deal. Taking their perception of what would be a major roadblock in doing a project like windows and making it seem like nothing.<br><br>
+  3. Maximizing is after you minimize the objection, you show why the benefits of doing a project like windows outweighs any objection they might have given you during the presentation.</p>
+</div>
+
+</div>
+<footer class="site-footer"><div class="f-brand">JK&amp;R Construction Inc.</div><div class="f-copy">Tampa, FL &mdash; Internal Training System</div><div class="f-motto">Full Faith &middot; Full Force &middot; Forward</div></footer>
+</body>
+</html>

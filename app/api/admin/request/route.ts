@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase/server';
 import { getMailer } from '@/lib/email';
+import { SUPERADMIN_EMAIL } from '@/lib/auth';
 
 export async function POST(_req: Request) {
   const supabase = await createServerClient();
@@ -13,9 +14,8 @@ export async function POST(_req: Request) {
     .eq('id', user.id)
     .single();
 
-  const superEmail = process.env.SUPERADMIN_EMAIL;
   const mailer = getMailer();
-  if (!superEmail || !mailer) {
+  if (!mailer) {
     return NextResponse.json(
       { error: 'Email is not configured. Ask the superadmin for the invite key directly.' },
       { status: 503 },
@@ -24,9 +24,9 @@ export async function POST(_req: Request) {
 
   await mailer.sendMail({
     from: process.env.GMAIL_USER,
-    to: superEmail,
+    to: SUPERADMIN_EMAIL,
     subject: `[JK&R] Admin access request — ${profile?.name ?? user.email}`,
-    text: `${profile?.name ?? user.email} (${profile?.email ?? user.email}) is requesting admin access to the JK&R portal.\n\nReply with the invite key if you approve.`,
+    text: `${profile?.name ?? user.email} (${profile?.email ?? user.email}) is requesting admin access to the JK&R Support Portal.\n\nReply with the invite key if you approve.`,
   });
 
   return NextResponse.json({ ok: true });

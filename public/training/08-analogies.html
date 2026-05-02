@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analogies | JK&R Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--border:#21262d;--gold:#c9a227;--text:#e6edf3;--muted:#8b949e;--dim:#484f58;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 40px 100px;}
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--text);margin:22px 0 8px;}
+  p{color:var(--muted);line-height:1.75;margin-bottom:12px;}
+  p strong{color:var(--text);font-weight:600;}
+  .mod-page-header{padding:36px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .pg-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--text);}
+  .callout{border-left:3px solid var(--gold);padding:14px 20px;margin:16px 0;background:var(--surface);}
+  .callout-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .callout p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .word-track{border-left:3px solid var(--gold);padding:14px 18px;margin:14px 0;background:var(--surface);}
+  .wt-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .word-track p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .step{border:1px solid var(--border);padding:16px 20px;margin:10px 0;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .step-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .step p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);}
+  ul.dl{list-style:none;padding:0;margin:10px 0;}
+  ul.dl li{font-size:14px;color:var(--muted);line-height:1.7;padding:4px 0 4px 18px;position:relative;}
+  ul.dl li::before{content:'4';position:absolute;left:0;color:var(--gold);font-size:12px;}
+  ul.dl li strong{color:var(--text);}
+  .dialogue{border:1px solid var(--border);padding:16px 20px;margin:14px 0;}
+  .d-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .dl-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);}
+  .dl-row:last-child{border-bottom:none;}
+  .dl-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;padding-top:2px;flex-shrink:0;color:var(--gold);}
+  .dl-s.p{color:var(--muted);}
+  .dl-t{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .box{border:1px solid var(--border);padding:14px 16px;background:var(--surface);}
+  .box-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .box p{font-size:13px;margin:0;line-height:1.6;}
+  .practice{border:1px solid var(--border);border-top:2px solid var(--gold);padding:16px 20px;margin:28px 0 0;}
+  .p-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .practice p{font-size:13.5px;margin:0;color:var(--text);line-height:1.7;}
+  .anchor-row{display:flex;align-items:center;gap:20px;padding:24px;border:1px solid var(--border);margin:14px 0;background:var(--surface);flex-wrap:wrap;}
+  .anc-item{text-align:center;flex:1;min-width:120px;}
+  .anc-amt{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+  .anc-amt.hi{color:var(--muted);}
+  .anc-amt.lo{color:var(--gold);}
+  .anc-note{font-size:11px;color:var(--dim);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .site-footer{border-top:1px solid var(--border);padding:20px 40px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .f-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);}
+  .f-copy{font-size:12px;color:var(--dim);}
+  .f-motto{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  .label-cat{margin:14px 0;padding:12px 16px;border:1px solid var(--border);}
+  .label-cat-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+  .label-list{font-size:13.5px;color:var(--muted);line-height:1.8;}
+  @media(max-width:700px){.wrap{padding-left:20px;padding-right:20px;}.grid2{grid-template-columns:1fr;}.site-footer{padding:20px;}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 40px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;"><a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c9a227;opacity:.8;">&#8592; Training Portal</a><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#484f58;">PDF 8</span></div>
+<div class="wrap">
+<div class="mod-page-header"><div class="eyebrow">PDF 8</div><div class="pg-title">Analogies</div></div>
+
+<h2>Why Analogies?</h2>
+<p>The human psychology isn't exactly linear, point A to B. Each homeowner we talk to out in turf have different backgrounds, levels of IQ, and almost certainly do not talk about impact windows like we do on a daily basis. So why should we expect them to understand what we took weeks to learn, on their first try?</p>
+<p>The point of communication isn't saying the words in flawless logic. The point of communication is to ensure the other party has captured your message. And that isn't based on how smart you are. Why do you think people fall asleep when teachers talk?</p>
+<p>The trick is to understand how our brains work, through pattern recognition. We learn how to utilize analogies so we can help homeowners understand our ideas through tying them to concepts in other experiences of their life. Below is a dynamic list of analogies that will assist your prospects' comprehension. Here are some analogies you can use on the door approach to familiarize the homeowner with the world of impact windows.</p>
+
+<h2>Window Price vs. Insurance Price</h2>
+<p><strong>Concept:</strong> Things used to be cheaper back in the day. Helps customer connect the idea of price per premium to price per gallon.</p>
+
+<div class="dialogue">
+  <div class="d-label">Gas Price Lock — Full Script</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Here, uh, put it this way. Where do you get your gas for your cars? I get mine at (gas company)."</span></div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"(gas company)."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"How come there?"</span></div>
+  <div class="dl-row"><span class="dl-s p">Customer</span><span class="dl-t">"Because its cheaper / close by."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"That's smart. Remember when gas used to be $3 a gallon? Long time ago, right, haha? Let's just imagine if you could go back in time and lock in that $3 a gallon, it wouldn't be a bad call, right? That's exactly what its like with insurance right now — if you are eligible you can 'travel back in time' and get insurance prices reverted back 15 years ago without the same inflation."</span></div>
+</div>
+
+<p>If your customer is calorically challenged: "Yeah, remember when McChickens were $1? Yeah, that's like what we see — who can get approved for a lower price, kind of like traveling back in time with prices."</p>
+<p><strong>Buzz phrase:</strong> "Yeah, especially knowing what we know now."</p>
+
+<h2>Some Things Cost More to Fix Than Replace</h2>
+<p><strong>Concept:</strong> Technology outpaces repairs. Old frames are expensive to maintain.</p>
+
+<div class="word-track">
+  <div class="wt-label">2003 Toyota Camry — Word Track</div>
+  <p>"Yeah, it costs so much because the old frames were originally built like decades ago, so what they found was updating and repairing it costs too much. It's like if you had a run down 2003 Toyota Camry, the cost to fix it could be more than what it's worth. What experts are realizing is it could be cheaper and safer to fund new tech like the impact glass instead of putting it into redoing all the old window panes."</p>
+</div>
+
+<h2>Delivery / Surcharge Fees</h2>
+<p><strong>Concept:</strong> Insurance Delivery / Surcharge Fees are BOGUS, especially in 2024. Can swap Amazon with pizza, Uber Eats.</p>
+
+<div class="dialogue">
+  <div class="d-label">Amazon Surcharge — Full Script</div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"You or your wife buy stuff from Amazon, I'm assuming? What's the last thing you bought? Ok, so that costed probably like ( ) dollars, right? Now what if they charged you ( ) x2 JUST to deliver it to your house? You probably would just pick up your keys and go to Walmart for it, right? That's what this surcharge fee is here for." (point on policy) "Your big insurance bill is mostly just paying an invisible delivery man."</span></div>
+  <div class="dl-row"><span class="dl-s">Rep</span><span class="dl-t">"Again, not sure if we can get this approved, but that's what we take care of since you would have no surcharge fee when you secure right on the spot."</span></div>
+</div>
+
+<h2>Subcontractors and Dealers vs. In-House</h2>
+<p><strong>Concept:</strong> People don't like middle men, especially if they're overpriced.</p>
+
+<div class="word-track">
+  <div class="wt-label">Farmers Market — Word Track</div>
+  <p>"The reason why people like us is because we aren't like a broker, or a middle man, which is how a lot of these programs are done nowadays. It's kind of like going to the farmers market and finding out a vendor is just reselling something they just brought from the grocery store an hour ago."</p>
+</div>
+
+<h2>Things Are Cheaper When Produced More</h2>
+<p><strong>Concept:</strong> Economies of scale. Use this example to make impact windows seem common and the way of the new age household.</p>
+
+<div class="word-track">
+  <div class="wt-label">Plasma TV — Word Track</div>
+  <p>"Yeah usually impact windows is really expensive and for the Beverly Hills home, but since there has been so much push for safety in the US, they have made a lot more. Remember how plasma TVs used to be $2,000? Now you can get a smart TV for $250 at Walmart. Impact glass is just like that."</p>
+</div>
+
+</div>
+<footer class="site-footer"><div class="f-brand">JK&amp;R Construction Inc.</div><div class="f-copy">Tampa, FL &mdash; Internal Training System</div><div class="f-motto">Full Faith &middot; Full Force &middot; Forward</div></footer>
+</body>
+</html>

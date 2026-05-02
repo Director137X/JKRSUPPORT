@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Overview | JK&R Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0d1117;--surface:#161b22;--border:#21262d;--border-light:#30363d;--gold:#c9a227;--text:#e6edf3;--muted:#8b949e;--dim:#484f58;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 40px 100px;}
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--text);margin:22px 0 8px;}
+  p{color:var(--muted);line-height:1.75;margin-bottom:12px;}
+  p strong{color:var(--text);font-weight:600;}
+  .mod-page-header{padding:36px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .pg-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--text);}
+  .callout{border-left:3px solid var(--gold);padding:14px 20px;margin:16px 0;background:var(--surface);}
+  .callout-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .callout p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .word-track{border-left:3px solid var(--gold);padding:14px 18px;margin:14px 0;background:var(--surface);}
+  .wt-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .word-track p{font-size:14px;color:var(--text);font-style:italic;margin:0;line-height:1.7;}
+  .step{border:1px solid var(--border);padding:16px 20px;margin:10px 0;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .step-title{font-family:'Oswald',sans-serif;font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;}
+  .step p{margin:0;font-size:14px;line-height:1.65;color:var(--muted);}
+  ul.dl{list-style:none;padding:0;margin:10px 0;}
+  ul.dl li{font-size:14px;color:var(--muted);line-height:1.7;padding:4px 0 4px 18px;position:relative;}
+  ul.dl li::before{content:'4';position:absolute;left:0;color:var(--gold);font-size:12px;}
+  ul.dl li strong{color:var(--text);}
+  .dialogue{border:1px solid var(--border);padding:16px 20px;margin:14px 0;}
+  .d-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+  .dl{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);}
+  .dl:last-child{border-bottom:none;}
+  .dl-s{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;min-width:70px;padding-top:2px;flex-shrink:0;color:var(--gold);}
+  .dl-s.p{color:var(--muted);}
+  .dl-t{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0;}
+  .box{border:1px solid var(--border);padding:14px 16px;background:var(--surface);}
+  .box-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .box p{font-size:13px;margin:0;line-height:1.6;}
+  .kpi-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;}
+  .kpi-table th{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);}
+  .kpi-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top;line-height:1.6;}
+  .kpi-table td:first-child{color:var(--text);font-weight:600;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:1px;}
+  .kpi-table td:nth-child(2){color:var(--text);}
+  .kpi-table tr:last-child td{border-bottom:none;}
+  .practice{border:1px solid var(--border);border-top:2px solid var(--gold);padding:16px 20px;margin:28px 0 0;}
+  .p-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .practice p{font-size:13.5px;margin:0;color:var(--text);line-height:1.7;}
+  .anchor-row{display:flex;align-items:center;gap:20px;padding:24px;border:1px solid var(--border);margin:14px 0;background:var(--surface);flex-wrap:wrap;}
+  .anc-item{text-align:center;flex:1;min-width:120px;}
+  .anc-amt{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;line-height:1;}
+  .anc-amt.hi{color:var(--muted);}
+  .anc-amt.lo{color:var(--gold);}
+  .anc-note{font-size:11px;color:var(--dim);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .anc-arrow{color:var(--gold);font-size:24px;}
+  .site-footer{border-top:1px solid var(--border);padding:20px 40px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .f-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);}
+  .f-copy{font-size:12px;color:var(--dim);}
+  .f-motto{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  @media(max-width:700px){.wrap{padding-left:20px;padding-right:20px;}.grid2,.grid3,.anchor-row{grid-template-columns:1fr;flex-direction:column;}.site-footer{padding:20px;}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto;padding:14px 40px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;">
+  <a href="index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#c9a227;opacity:.8;">&#8592; Training Portal</a>
+  <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#484f58;">PDF 2</span>
+</div>
+<div class="wrap">
+<div class="mod-page-header">
+  <div class="eyebrow">PDF 2</div>
+  <div class="pg-title">Roadmap Overview</div>
+</div>
+
+<h2>Roadmap Overview</h2>
+
+<h3>Module 1: The Intro &amp; Breaking Preoccupation</h3>
+<p><strong>Objective:</strong> Learn how to lower the walls of the prospect and ease tension through a positive first impression.</p>
+<p><strong>Key Concepts:</strong></p>
+<ul class="dl">
+  <li><strong>Positive First Impression:</strong> Your demeanor should be friendly and approachable. Smile, make eye contact, and use open body language.</li>
+  <li><strong>Establish Control — Ask Questions:</strong> Start with simple questions to engage the prospect.</li>
+  <li><strong>Close the Gap:</strong> Use their name from your knocking app to confirm details and approach them to stand shoulder to shoulder with them as they look at your screen, then take a step back.</li>
+  <li><strong>Hand Them Something:</strong> Present a flyer or information sheet called a Slicc.</li>
+  <li><strong>Move Them Away from the Door:</strong> Interrupt yourself as you begin to explain the information sheet and say "you know what, its easier if I just show ya how you're involved" and turn away while gesturing them to follow you and walk to their driveway. Because they are holding your information sheet, they will follow you.</li>
+  <li>You can then proceed to explain the recent updates that have taken place with replacing old vulnerable windows with impact ones. Use local references or recent events to establish credibility like recent hurricanes, tropical storms, or construction.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Intro Question</div>
+  <p>"Hey did the neighbors mention I was going to swing by? Okay no worries I just want to confirm I'm at the right spot — this is 123 Elm Street, right?"</p>
+</div>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Justify Your Existence</div>
+  <p>"My job is to do the mitigation survey/research/canvassing for a hazard report because due to the recent storms, a few neighbors were a little bit upset with their insurance going up."</p>
+</div>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Hand Them the Slicc</div>
+  <p>"Here, you should have gotten something like this in the mail, its just a progress report on the project with these neighborhood window updates."</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>Role-play the introduction scenario with a partner, focusing on maintaining a friendly demeanor, asking engaging questions, and using local references to establish familiarity.</p>
+</div>
+
+<h3>Module 2: Build Pain</h3>
+<p><strong>Objective:</strong> Explain why you are there and create a sense of urgency regarding rate increases.</p>
+<ul class="dl">
+  <li><strong>Communicate the Reason for Your Visit:</strong> Clearly articulate that you are there due to high rate increases from the insurance and utility companies.</li>
+  <li><strong>Use Options to Engage:</strong> Pose questions that require the prospect to reflect on their experiences.</li>
+  <li><strong>Guide the Conversation:</strong> Use their responses to guide the discussion. If they mention a significant increase, follow up.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Build Pain Questions</div>
+  <p>"Have you noticed your premium going up a little or a lot over the past few months?"</p>
+  <p style="margin-top:8px;">"Many neighbors have mentioned that hurricane season is their peak stress month. Is that the case for you as well or a different month?"</p>
+  <p style="margin-top:8px;">"That's a common experience. With the recent rate hikes approved by the insurance companies, many residents are feeling the pinch."</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>Conduct mock conversations in pairs where one person plays the role of the prospect. Focus on using the questions effectively to build a sense of urgency, while maintaining control of the conversation.</p>
+</div>
+
+<h3>Module 3: Preempt Impact Windows</h3>
+<p><strong>Objective:</strong> Introduce impact windows as a potential solution without overwhelming the prospect.</p>
+<ul class="dl">
+  <li><strong>Introduce Windows as a Solution:</strong> Frame window solutions as a positive alternative for reducing insurance and energy costs.</li>
+  <li><strong>Lead with Inquiry:</strong> Start the conversation about windows by asking if they've considered other programs that might help them save money.</li>
+  <li><strong>Gauge Interest:</strong> Listen to their response carefully. If they express curiosity, you can delve deeper into the benefits of window solutions.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Preempt</div>
+  <p>"I know a few neighbors were trying to opt out of all of those extra fees, so they were looking into things like My Safe Florida Home, or making the home more efficient. In the past a lot of people looked at impact windows but it didnt really make a lot of sense, now things have changed a lot so its kind of starting too for some people. What's kind of held you guys back from trying to get away from the increases?"</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>Role-play the window introduction with a partner, focusing on how to ask about their prior knowledge of impact windows without making it sound like a hard sell.</p>
+</div>
+
+<h3>Module 4: Discovery</h3>
+<p><strong>Objective:</strong> Understand the prospect's resistance to impact windows and uncover their motivations.</p>
+<ul class="dl">
+  <li><strong>Expect Resistance:</strong> Be prepared for objections. It's common for prospects to have hesitations about windows.</li>
+  <li><strong>Identify Objections:</strong> Ask open-ended questions to discover their concerns. Whatever they say right here, you will simply agree that their concern is reasonable and you're glad they have waited to get into it. Let them know things are different, and then you will ask them if that was the only thing that held them back or if there is anything else. If they tell you there is more, you do the same process. Once they've stated every reason they dont like window upgrades, you move on to the next phase of discovery.</li>
+  <li><strong>Explore Benefits:</strong> Encourage them to think about potential benefits.</li>
+  <li><strong>Listen Actively:</strong> Take careful notes on their responses to tailor your approach moving forward.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Discovery Question</div>
+  <p>"What's the main reason you haven't hopped on the impact window wave?"</p>
+</div>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Explore Benefits</div>
+  <p>"There are a few reasons why people get into impact windows in the first place, they primarily are looking to save money, secure their home without getting smashed by the insurance bills, or they just want more predictability and control over inflation. For you, what would be your main priority? What would be your second?"</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>In groups, brainstorm possible objections to impact windows and role-play how to respond to them. Focus on listening and validating their concerns. Role play asking questions about benefits and dig into why they matter to that homeowner.</p>
+</div>
+
+<h3>Module 5: Pull Back</h3>
+<p><strong>Objective:</strong> Maintain control of the conversation while reinforcing the selectivity of the program.</p>
+<ul class="dl">
+  <li><strong>Reinforce Control:</strong> Let the prospect know you are still in charge of the conversation.</li>
+  <li><strong>Communicate Selectivity:</strong> Use phrases that imply exclusivity and selectivity of the program.</li>
+  <li><strong>Encourage Curiosity:</strong> This might prompt the prospect to inquire more about the program and their potential eligibility.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Pull Back</div>
+  <p>"To be honest, I'm not sure if you would qualify for the program. It's designed for specific households that meet certain criteria."</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>Role-play scenarios where you reinforce control while mentioning the selectivity of the program. Focus on how to maintain a confident tone without sounding dismissive.</p>
+</div>
+
+<h3>Module 6: Make an Offer</h3>
+<p><strong>Objective:</strong> Present the program in a way that aligns with the prospect's needs and concerns.</p>
+<ul class="dl">
+  <li><strong>Frame the Offer Hypothetically:</strong> Ask the prospect if they would be open to exploring the program if their concerns were addressed.</li>
+  <li><strong>Highlight Benefits:</strong> Emphasize the positive outcomes of the program without focusing solely on the technical aspects.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Offer</div>
+  <p>"In an ideal world, if your concerns weren't part of the program and you could enjoy the benefits, would you be against taking a look at this?"</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>Work in pairs to practice presenting the hypothetical offer. One person plays the role of the rep, while the other provides feedback on clarity and engagement.</p>
+</div>
+
+<h3>Module 7: Qualify Them</h3>
+<p><strong>Objective:</strong> Confirm the prospect's eligibility and solidify their interest.</p>
+<ul class="dl">
+  <li><strong>Review the Insurance / Electric Bill:</strong> Ask to see their policy or electric bill to identify potential savings and eligibility for the program.</li>
+  <li>As you look at their bill, do what's called "Kill the Bill" and go over all of the surcharges and delivery fees. Add them up, and compare it to what was actually paid for the coverage.</li>
+  <li><strong>Inspect the Openings:</strong> Check sliding glass doors and builder-grade windows.</li>
+  <li>Continue to Kill the Bill while you're at the window and build more pain.</li>
+  <li><strong>Appointment Reminder:</strong> Leave them with a takeaway sheet that outlines expectations for the next steps.</li>
+</ul>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Pull the Bill</div>
+  <p>"I just need to take a look at your homeowners policy, do you typically get that in the mail or online?"</p>
+</div>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Inspect the Openings</div>
+  <p>"Let's check your sliding glass doors to see how much of a draft you're pulling to the home. Are your original builder grade windows on the left or the right?"</p>
+</div>
+
+<div class="word-track">
+  <div class="wt-label">Word Track — Appointment Reminder</div>
+  <p>"I'll leave you with this paper that reviews our upcoming appointment expectations and my contact information."</p>
+</div>
+
+<div class="practice">
+  <div class="p-label">Practice Exercise</div>
+  <p>Simulate the process of reviewing a policy and inspecting a window. Focus on how to guide the prospect through these steps while keeping the conversation friendly and informative.</p>
+</div>
+
+</div>
+<footer class="site-footer">
+  <div class="f-brand">JK&amp;R Construction Inc.</div>
+  <div class="f-copy">Tampa, FL &mdash; Internal Training System</div>
+  <div class="f-motto">Full Faith &middot; Full Force &middot; Forward</div>
+</footer>
+</body>
+</html>

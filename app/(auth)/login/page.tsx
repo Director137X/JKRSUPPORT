@@ -3,81 +3,339 @@
 export const dynamic = 'force-dynamic';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { SpartanHelmet } from '@/components/spartan-helmet';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { createClient } from '@/lib/supabase/client';
+import { PortalCard } from '@/components/portal/PortalCard';
+import { PortalField } from '@/components/portal/PortalField';
+import { PortalButton } from '@/components/portal/PortalButton';
+import {
+  reachedStage,
+  usePortalEntrance,
+} from '@/components/portal/usePortalEntrance';
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+type Mode = 'signin' | 'signup';
+type Position = 'closer' | 'setter' | 'admin';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
+  const { stage, reduced } = usePortalEntrance();
+
+  const [mode, setMode] = useState<Mode>(
+    searchParams?.get('mode') === 'signup' ? 'signup' : 'signin',
+  );
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [position, setPosition] = useState<Position>('closer');
+  const [adminCode, setAdminCode] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setInfo(null);
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
+
+    if (mode === 'signin') {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      setLoading(false);
+      if (error) {
+        setError(error.message);
+        return;
+      }
+      router.push('/coach');
+      router.refresh();
+      return;
+    }
+
+    if (position === 'admin' && adminCode.trim().length < 4) {
+      setLoading(false);
+      setError('Admin invite code is required.');
+      return;
+    }
+
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { name, position },
+        emailRedirectTo: `${origin}/auth/callback`,
+      },
+    });
     if (error) {
+      setLoading(false);
       setError(error.message);
       return;
     }
-    router.push('/coach');
-    router.refresh();
+
+    if (data.user && !data.session) {
+      setLoading(false);
+      setInfo(
+        position === 'admin'
+          ? 'Check your inbox to confirm. Sign in, then redeem your admin code in Settings.'
+          : 'Check your inbox to confirm your account, then return to sign in.',
+      );
+      return;
+    }
+
+    if (data.session && position === 'admin') {
+      const res = await fetch('/api/auth/redeem-admin-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: adminCode.trim() }),
+      });
+      setLoading(false);
+      if (!res.ok) {
+        const { error: detail } = await res.json().catch(() => ({ error: 'Code rejected' }));
+        setError(detail || 'Code rejected — sign in and redeem in Settings.');
+        return;
+      }
+      window.location.href = '/coach';
+      return;
+    }
+
+    setLoading(false);
+    if (data.session) {
+      window.location.href = '/coach';
+    }
   };
 
   return (
-    <div className="bg-surface/90 backdrop-blur border border-line rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
-      <div className="p-8 text-center border-b border-line bg-surface-2/80">
-        <SpartanHelmet className="w-14 h-14 text-gold mx-auto mb-4 drop-shadow-md" />
-        <h1 className="font-display text-2xl tracking-widest uppercase text-white">JK&R Portal</h1>
-        <p className="text-sm text-zinc-400 mt-2">Sign in to the JK&R Sales Coach.</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="p-8 space-y-5">
-        {error && (
-          <div className="p-3 bg-red-900/30 border border-red-500/40 rounded text-red-200 text-sm">
-            {error}
-          </div>
-        )}
-        <div>
-          <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Email</label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-black border border-line rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold"
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Password</label>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full bg-black border border-line rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-gold text-black font-bold uppercase tracking-wider py-3.5 rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50"
+    <div className="w-full flex flex-col items-center">
+      {/* Auth mode toggle — sits ABOVE the card */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={reachedStage(stage, 'wordmark') ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.3, ease: EASE }}
+        className="mb-10 flex items-center gap-4 text-[11px] font-portal font-medium uppercase"
+        style={{ letterSpacing: '0.24em' }}
+        role="tablist"
+      >
+        <ToggleLink
+          active={mode === 'signin'}
+          onClick={() => {
+            setMode('signin');
+            setError(null);
+            setInfo(null);
+          }}
         >
-          {loading ? 'Signing in…' : 'Enter Portal'}
-        </button>
-        <p className="text-center text-sm text-zinc-500">
-          New rep?{' '}
-          <Link href="/signup" className="text-gold hover:underline">
-            Create an account
-          </Link>
-        </p>
-      </form>
+          Sign In
+        </ToggleLink>
+        <span className="h-3 w-px bg-portal-hairline" aria-hidden />
+        <ToggleLink
+          active={mode === 'signup'}
+          onClick={() => {
+            setMode('signup');
+            setError(null);
+            setInfo(null);
+          }}
+        >
+          Create Account
+        </ToggleLink>
+      </motion.div>
+
+      <PortalCard stage={stage} reduced={reduced}>
+        <form onSubmit={onSubmit} className="space-y-8" noValidate>
+          {info && (
+            <p className="text-[12px] font-portal text-portal-success" role="status">
+              {info}
+            </p>
+          )}
+
+          {mode === 'signup' && (
+            <FieldFade stage={stage} index={0}>
+              <PortalField
+                label="OPERATOR NAME"
+                placeholder="First Last"
+                autoComplete="name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </FieldFade>
+          )}
+
+          <FieldFade stage={stage} index={mode === 'signup' ? 1 : 0}>
+            <PortalField
+              label="WORK EMAIL"
+              type="email"
+              placeholder="name@jkrconstruction.com"
+              autoComplete="email"
+              inputMode="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FieldFade>
+
+          <FieldFade stage={stage} index={mode === 'signup' ? 2 : 1}>
+            <PortalField
+              label="PASSWORD"
+              type="password"
+              placeholder="••••••••"
+              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+              minLength={mode === 'signup' ? 8 : undefined}
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={error}
+            />
+          </FieldFade>
+
+          {mode === 'signup' && (
+            <FieldFade stage={stage} index={3}>
+              <RolePicker value={position} onChange={setPosition} />
+            </FieldFade>
+          )}
+
+          {mode === 'signup' && position === 'admin' && (
+            <FieldFade stage={stage} index={4}>
+              <PortalField
+                label="ADMIN INVITE CODE"
+                placeholder="Issued by superadmin"
+                autoComplete="off"
+                required
+                value={adminCode}
+                onChange={(e) => setAdminCode(e.target.value.toUpperCase())}
+              />
+            </FieldFade>
+          )}
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={reachedStage(stage, 'button') ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.3, ease: EASE }}
+          >
+            <PortalButton type="submit" disabled={loading}>
+              {loading
+                ? mode === 'signin'
+                  ? 'AUTHENTICATING'
+                  : 'CREATING'
+                : mode === 'signin'
+                ? 'ENTER PORTAL'
+                : 'CREATE ACCOUNT'}
+            </PortalButton>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={reachedStage(stage, 'button') ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.3, ease: EASE, delay: 0.1 }}
+            className="text-center text-[10px] font-portal text-portal-tertiary"
+            style={{ letterSpacing: '0.04em' }}
+          >
+            By entering, you accept the JK&amp;R Conduct &amp; Confidentiality Code.
+          </motion.p>
+        </form>
+      </PortalCard>
+    </div>
+  );
+}
+
+function FieldFade({
+  children,
+  stage,
+  index,
+}: {
+  children: React.ReactNode;
+  stage: ReturnType<typeof usePortalEntrance>['stage'];
+  index: number;
+}) {
+  const visible = reachedStage(stage, 'fields');
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+      transition={{ duration: 0.4, ease: EASE, delay: index * 0.08 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function ToggleLink({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      role="tab"
+      aria-selected={active}
+      className="relative pb-2"
+      style={{ letterSpacing: '0.24em' }}
+    >
+      <span className={active ? 'text-portal-text' : 'text-portal-tertiary'}>
+        {children}
+      </span>
+      {active && (
+        <motion.span
+          layoutId="portal-toggle-rule"
+          className="absolute left-1/2 -translate-x-1/2 bottom-0 h-px w-6 bg-portal-gold"
+          transition={{ duration: 0.28, ease: EASE }}
+        />
+      )}
+    </button>
+  );
+}
+
+function RolePicker({
+  value,
+  onChange,
+}: {
+  value: Position;
+  onChange: (v: Position) => void;
+}) {
+  const opts: { v: Position; label: string; desc: string }[] = [
+    { v: 'closer', label: 'CLOSER', desc: 'Direct access. No code required.' },
+    { v: 'setter', label: 'SETTER', desc: 'Direct access. No code required.' },
+    { v: 'admin', label: 'ADMIN', desc: 'Requires invite code from superadmin.' },
+  ];
+  return (
+    <div className="flex flex-col">
+      <span
+        className="text-[11px] font-portal font-medium uppercase text-portal-tertiary"
+        style={{ letterSpacing: '0.18em' }}
+      >
+        ROLE
+      </span>
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {opts.map((o) => {
+          const active = value === o.v;
+          return (
+            <button
+              key={o.v}
+              type="button"
+              onClick={() => onChange(o.v)}
+              aria-pressed={active}
+              className={`px-3 py-3 text-[11px] font-portal font-semibold transition-colors ${
+                active
+                  ? 'bg-portal-gold/10 text-portal-gold border border-portal-gold'
+                  : 'bg-transparent text-portal-tertiary border border-portal-hairline hover:text-portal-text'
+              }`}
+              style={{ letterSpacing: '0.24em', borderRadius: 0 }}
+            >
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
+      <p className="mt-3 text-[10px] font-portal text-portal-tertiary" style={{ letterSpacing: '0.04em' }}>
+        {opts.find((o) => o.v === value)?.desc}
+      </p>
     </div>
   );
 }
