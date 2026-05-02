@@ -15,7 +15,7 @@ export default async function CoachPage() {
     .eq('user_id', user.id)
     .order('updated_at', { ascending: false })
     .limit(1)
-    .maybeSingle();
+    .maybeSingle() as any;
 
   let messages: { id: string; conversation_id: string; role: 'user' | 'assistant'; content: string; created_at: string }[] = [];
   if (latest) {
@@ -23,7 +23,7 @@ export default async function CoachPage() {
       .from('messages')
       .select('*')
       .eq('conversation_id', latest.id)
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: true }) as any;
     messages = data ?? [];
   }
 
