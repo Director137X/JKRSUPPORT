@@ -153,6 +153,14 @@ function DMConversation({ thread_id, me }: { thread_id: string; me: Profile }) {
         .limit(500) as any;
       if (!mounted) return;
       setMsgs((data ?? []) as DM[]);
+
+      // Mark every inbound message in this thread as read.
+      await supabase
+        .from('dm_messages')
+        .update({ read_at: new Date().toISOString() })
+        .eq('thread_id', thread_id)
+        .neq('sender_id', me.id)
+        .is('read_at', null);
     })();
 
     const ch = supabase

@@ -10,7 +10,7 @@ import { OversightTrigger } from './oversight-trigger';
 import type { Profile } from '@/types/database';
 import { isSuperadminEmail } from '@/lib/auth';
 
-type Props = { profile: Profile };
+type Props = { profile: Profile; unreadDms?: number };
 
 type NavItem = {
   href: string;
@@ -29,7 +29,7 @@ const NAV: NavItem[] = [
   { href: '/settings',       label: 'SETTINGS',       icon: Settings, eyebrow: true },
 ];
 
-export function Sidebar({ profile }: Props) {
+export function Sidebar({ profile, unreadDms = 0 }: Props) {
   const pathname = usePathname();
   const isAdmin = profile.role === 'admin' || profile.role === 'superadmin';
   const isSuper = profile.role === 'superadmin' || isSuperadminEmail(profile.email);
@@ -48,6 +48,7 @@ export function Sidebar({ profile }: Props) {
         {NAV.map(({ href, label, icon: Icon, adminOnly }) => {
           if (adminOnly && !isAdmin) return null;
           const active = pathname === href || pathname?.startsWith(href + '/');
+          const showBadge = href === '/support-circle' && unreadDms > 0;
           return (
             <Link
               key={href}
@@ -63,7 +64,29 @@ export function Sidebar({ profile }: Props) {
               }}
             >
               <Icon size={16} />
-              {label}
+              <span style={{ flex: 1 }}>{label}</span>
+              {showBadge && (
+                <span
+                  aria-label={`${unreadDms} unread message${unreadDms === 1 ? '' : 's'}`}
+                  style={{
+                    minWidth: '18px',
+                    height: '18px',
+                    padding: '0 5px',
+                    borderRadius: '999px',
+                    background: '#B84A3F',
+                    color: '#FFF',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    letterSpacing: 0,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    lineHeight: 1,
+                  }}
+                >
+                  {unreadDms > 99 ? '99+' : unreadDms}
+                </span>
+              )}
             </Link>
           );
         })}
