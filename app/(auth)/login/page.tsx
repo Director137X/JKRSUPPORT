@@ -209,7 +209,7 @@ function LoginInner() {
             <FieldFade stage={stage} index={4}>
               <PortalField
                 label="ADMIN INVITE CODE"
-                placeholder="Issued by superadmin"
+                placeholder="Issued by an admin"
                 autoComplete="off"
                 required
                 value={adminCode}
@@ -312,7 +312,7 @@ function RolePicker({
   const opts: { v: Position; label: string; desc: string }[] = [
     { v: 'closer', label: 'CLOSER', desc: 'Direct access. No code required.' },
     { v: 'setter', label: 'SETTER', desc: 'Direct access. No code required.' },
-    { v: 'admin', label: 'ADMIN', desc: 'Requires invite code from superadmin.' },
+    { v: 'admin', label: 'ADMIN', desc: 'Requires an invite code.' },
   ];
   return (
     <div className="flex flex-col">

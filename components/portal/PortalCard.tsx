@@ -81,7 +81,7 @@ export function PortalCard({ children, stage: stageOverride, reduced: reducedOve
           className="mt-4 text-center text-[12px] font-portal text-portal-tertiary"
           style={{ letterSpacing: '0.16em' }}
         >
-          Authorized personnel only.
+          Authorized Members only.
         </motion.p>
 
         {/* Children (form) */}

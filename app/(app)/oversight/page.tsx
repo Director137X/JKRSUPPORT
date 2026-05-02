@@ -75,7 +75,7 @@ export default async function OversightPage() {
         <header className="oversight-header">
           <MasonicEye size={28} className="header-eye" />
           <div>
-            <div className="oversight-eyebrow">SUPER-ADMIN ONLY · CLASSIFIED</div>
+            <div className="oversight-eyebrow">DIRECTOR ONLY · CLASSIFIED</div>
             <h1 className="oversight-title">Oversight</h1>
             <p className="oversight-sub">Identifying data revealed below is restricted. Highlighted in red — handle accordingly.</p>
           </div>

@@ -32,7 +32,7 @@ export function GrantForm() {
 
   return (
     <section className="bg-surface border border-line rounded-xl p-6">
-      <h2 className="font-display text-sm tracking-widest uppercase text-gold mb-4">Grant / Revoke Admin (superadmin)</h2>
+      <h2 className="font-display text-sm tracking-widest uppercase text-gold mb-4">Grant / Revoke Admin (Director)</h2>
       <form onSubmit={submit} className="flex flex-col sm:flex-row gap-3">
         <input
           type="email"
