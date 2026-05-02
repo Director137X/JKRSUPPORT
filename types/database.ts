@@ -32,16 +32,19 @@ export type Database = {
         Row: Profile;
         Insert: Partial<Profile> & { id: string; email: string };
         Update: Partial<Profile>;
+        Relationships: [];
       };
       conversations: {
         Row: Conversation;
         Insert: Partial<Conversation> & { user_id: string; title: string };
         Update: Partial<Conversation>;
+        Relationships: [];
       };
       messages: {
         Row: Message;
         Insert: Partial<Message> & { conversation_id: string; role: 'user' | 'assistant'; content: string };
         Update: Partial<Message>;
+        Relationships: [];
       };
     };
     Views: {
@@ -53,7 +56,11 @@ export type Database = {
           message_count: number;
           first_user_message: string | null;
         };
+        Relationships: [];
       };
     };
+    Functions: Record<string, never>;
+    Enums: { user_role: Role };
+    CompositeTypes: Record<string, never>;
   };
 };

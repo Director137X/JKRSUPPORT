@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
-  const { data: me } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+  const { data: me } = await supabase.from('profiles').select('*').eq('id', user.id).single();
   if (me?.role !== 'superadmin') {
     return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   }

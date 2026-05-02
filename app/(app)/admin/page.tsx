@@ -11,7 +11,7 @@ export default async function AdminPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 
-  const { data: me } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+  const { data: me } = await supabase.from('profiles').select('*').eq('id', user.id).single();
   if (!me || (me.role !== 'admin' && me.role !== 'superadmin')) redirect('/coach');
   const isSuper = me.role === 'superadmin';
 
