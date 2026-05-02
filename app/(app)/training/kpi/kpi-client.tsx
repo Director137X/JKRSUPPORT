@@ -30,8 +30,9 @@ export function KpiClient({ today, recent }: { today: KPI | null; recent: KPI[] 
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  const set = (k: keyof typeof form, v: string | number) =>
-    setForm((f) => ({ ...f, [k]: typeof v === 'string' ? v : Math.max(0, v) }));
+  const setNumber = (k: 'tod_minutes' | 'dmc' | 'odm' | 'ubc' | 'sfc' | 'signed' | 'sold', v: number) =>
+    setForm((f) => ({ ...f, [k]: Math.max(0, v) }));
+  const setNotes = (v: string) => setForm((f) => ({ ...f, notes: v }));
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +83,7 @@ export function KpiClient({ today, recent }: { today: KPI | null; recent: KPI[] 
                     inputMode="numeric"
                     min={0}
                     value={form[f.key] as number}
-                    onChange={(e) => set(f.key, parseInt(e.target.value || '0', 10))}
+                    onChange={(e) => setNumber(f.key, parseInt(e.target.value || '0', 10))}
                   />
                 </div>
               ))}
@@ -94,7 +95,7 @@ export function KpiClient({ today, recent }: { today: KPI | null; recent: KPI[] 
                 rows={3}
                 placeholder="What worked, what stalled, what to drill tomorrow…"
                 value={form.notes ?? ''}
-                onChange={(e) => set('notes', e.target.value)}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </div>
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut } from 'lucide-react';
+import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut, type LucideIcon } from 'lucide-react';
 import { SpartanHelmet } from './spartan-helmet';
 import { EyeIcon } from './eye-icon';
 import { MasonicEye } from './masonic-eye';
@@ -14,7 +14,7 @@ type Props = { profile: Profile };
 type NavItem = {
   href: string;
   label: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: LucideIcon;
   eyebrow?: boolean;
   adminOnly?: boolean;
 };
