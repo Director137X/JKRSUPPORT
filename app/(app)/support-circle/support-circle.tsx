@@ -18,8 +18,9 @@ type Tab = 'circle' | 'dms';
 
 export function SupportCircle({ profile }: { profile: Profile }) {
   const [tab, setTab] = useState<Tab>('circle');
-  const [anonymous, setAnonymous] = useState<boolean>(profile.is_anonymous);
   const isAdmin = profile.role === 'admin' || profile.role === 'superadmin';
+  // Admins / Director cannot post anonymously — only closers/setters can.
+  const [anonymous, setAnonymous] = useState<boolean>(!isAdmin && profile.is_anonymous);
 
   return (
     <div className="circle-root">
@@ -37,16 +38,18 @@ export function SupportCircle({ profile }: { profile: Profile }) {
         </div>
 
         <div className="circle-header-right">
-          <button
-            type="button"
-            onClick={() => setAnonymous((v) => !v)}
-            className={`identity-toggle ${anonymous ? 'is-anon' : ''}`}
-            aria-pressed={anonymous}
-            title={anonymous ? 'You are posting anonymously' : 'You are posting as yourself'}
-          >
-            {anonymous ? <EyeOff size={14} /> : <Eye size={14} />}
-            <span>{anonymous ? 'ANON' : (profile.name ?? profile.email)}</span>
-          </button>
+          {!isAdmin && (
+            <button
+              type="button"
+              onClick={() => setAnonymous((v) => !v)}
+              className={`identity-toggle ${anonymous ? 'is-anon' : ''}`}
+              aria-pressed={anonymous}
+              title={anonymous ? 'You are posting anonymously' : 'You are posting as yourself'}
+            >
+              {anonymous ? <EyeOff size={14} /> : <Eye size={14} />}
+              <span>{anonymous ? 'ANON' : (profile.name ?? profile.email)}</span>
+            </button>
+          )}
         </div>
       </header>
 
@@ -93,6 +96,7 @@ function CirclePane({ anonymous, profile }: { anonymous: boolean; profile: Profi
       const { data, error } = await supabase
         .from('circle_feed')
         .select('*')
+        .eq('kind', 'public')
         .order('created_at', { ascending: true })
         .limit(200) as any;
       if (!mounted) return;
@@ -111,6 +115,7 @@ function CirclePane({ anonymous, profile }: { anonymous: boolean; profile: Profi
             .from('circle_feed')
             .select('*')
             .eq('id', id)
+            .eq('kind', 'public')
             .maybeSingle() as any;
           if (!error && data) {
             setMessages((m) => (m.some((x) => x.id === data.id) ? m : [...m, data as CircleFeedRow]));

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut, UsersRound, type LucideIcon } from 'lucide-react';
+import { Users, ShieldCheck, BookOpen, Shield, Settings, LogOut, UsersRound, LayoutDashboard, type LucideIcon } from 'lucide-react';
 import { SpartanHelmet } from './spartan-helmet';
 import { EyeIcon } from './eye-icon';
 import { MasonicEye } from './masonic-eye';
@@ -24,6 +24,7 @@ const NAV: NavItem[] = [
   { href: '/support-circle', label: 'SUPPORT CIRCLE', icon: Users, eyebrow: true },
   { href: '/members',        label: 'MEMBERS',        icon: UsersRound, eyebrow: true },
   { href: '/admin',          label: 'ADMIN',          icon: ShieldCheck, eyebrow: true, adminOnly: true },
+  { href: '/admin/view',     label: 'ADMIN VIEW',     icon: LayoutDashboard, eyebrow: true, adminOnly: true },
   { href: '/training',       label: 'TRAINING',       icon: BookOpen, eyebrow: true },
   { href: '/coach',          label: 'SPARTAN AI',     icon: Shield, eyebrow: true },
   { href: '/settings',       label: 'SETTINGS',       icon: Settings, eyebrow: true },
@@ -47,7 +48,10 @@ export function Sidebar({ profile, unreadDms = 0 }: Props) {
       <nav className="flex-1 px-3 py-5 space-y-1 overflow-y-auto scrollbar-thin">
         {NAV.map(({ href, label, icon: Icon, adminOnly }) => {
           if (adminOnly && !isAdmin) return null;
-          const active = pathname === href || pathname?.startsWith(href + '/');
+          // /admin must match exactly so /admin/view doesn't light up both rows.
+          const active =
+            pathname === href ||
+            (href !== '/admin' && !!pathname?.startsWith(href + '/'));
           const showBadge = href === '/support-circle' && unreadDms > 0;
           return (
             <Link
